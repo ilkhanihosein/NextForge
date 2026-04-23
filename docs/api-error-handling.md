@@ -2,13 +2,13 @@
 
 ## At a glance
 
-| What you need to know | Detail |
-| --------------------- | ------ |
-| **Who shows toasts?** | **`query-client.ts`** — **`QueryCache.onError`** / **`MutationCache.onError`** on **final** failure only (not per silent HTTP retry). |
-| **Who stays silent?** | Axios **refresh + retry**, **queued** requests during refresh, **one network retry**, and React Query **`retry`** attempts — no toast until retries are exhausted. |
-| **`AuthError`** | Never auto-toasted; handle redirect / session UI yourself. |
-| **Opt out of global toast** | **`meta: { suppressErrorToast: true }`** (and optional **`errorToastTitle`**) on **`queryOptions`** / **`useMutation`**. |
-| **What to avoid** | Toasts inside Axios interceptors; duplicate **`useQuery` `onError`** if you already use global cache toasts. |
+| What you need to know       | Detail                                                                                                                                                             |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Who shows toasts?**       | **`query-client.ts`** — **`QueryCache.onError`** / **`MutationCache.onError`** on **final** failure only (not per silent HTTP retry).                              |
+| **Who stays silent?**       | Axios **refresh + retry**, **queued** requests during refresh, **one network retry**, and React Query **`retry`** attempts — no toast until retries are exhausted. |
+| **`AuthError`**             | Never auto-toasted; handle redirect / session UI yourself.                                                                                                         |
+| **Opt out of global toast** | **`meta: { suppressErrorToast: true }`** (and optional **`errorToastTitle`**) on **`queryOptions`** / **`useMutation`**.                                           |
+| **What to avoid**           | Toasts inside Axios interceptors; duplicate **`useQuery` `onError`** if you already use global cache toasts.                                                       |
 
 The sections below spell out **layers**, **silent retries**, **`meta`**, and **antipatterns**.
 
@@ -16,11 +16,11 @@ The sections below spell out **layers**, **silent retries**, **`meta`**, and **a
 
 ## Layers (who does what)
 
-| Layer | Responsibility |
-| ----- | ---------------- |
-| **Axios client** (`createApiClient`) | Silent **refresh + retry** on 401/403 (when configured), one **network** retry, normalize errors to `ApiError` / `AuthError`. **No toasts here.** |
-| **React Query** (`retry`, cache callbacks) | Optional extra retries for **transient** failures; **global toast** on query/mutation errors that surface to the cache. |
-| **UI** (`useQuery` / `useMutation` / forms) | Inline errors, field validation, redirects on auth, and **opt-out** from the global toast via `meta`. |
+| Layer                                       | Responsibility                                                                                                                                    |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Axios client** (`createApiClient`)        | Silent **refresh + retry** on 401/403 (when configured), one **network** retry, normalize errors to `ApiError` / `AuthError`. **No toasts here.** |
+| **React Query** (`retry`, cache callbacks)  | Optional extra retries for **transient** failures; **global toast** on query/mutation errors that surface to the cache.                           |
+| **UI** (`useQuery` / `useMutation` / forms) | Inline errors, field validation, redirects on auth, and **opt-out** from the global toast via `meta`.                                             |
 
 ---
 
@@ -76,10 +76,10 @@ Use **`suppressErrorToast: true`** when:
 
 ## `AuthError` and session end
 
-| Situation | Typical UX |
-| --------- | ------------ |
+| Situation                                       | Typical UX                                                                                                            |
+| ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
 | Refresh fails, 401/403 without refresh, **412** | `clearTokens` + `onAuthFailure` — **redirect** or modal; **do not** rely on a generic error toast as the only signal. |
-| `skipAuthRefresh: true` | No refresh attempt; user may need a login flow for that call. |
+| `skipAuthRefresh: true`                         | No refresh attempt; user may need a login flow for that call.                                                         |
 
 Global handlers **skip toasts for `AuthError`** on both queries and mutations so you can centralize auth UX.
 
@@ -97,11 +97,11 @@ Global handlers **skip toasts for `AuthError`** on both queries and mutations so
 
 ## Related files
 
-| File | Role |
-| ---- | ---- |
-| `src/lib/api/client.ts` | Refresh queue, network retry, throws `ApiError` / `AuthError`. |
-| `src/lib/api/errors.ts` | `ApiError`, `AuthError`, payload normalization. |
-| `src/lib/react-query/query-client.ts` | Global toasts, RQ `retry`, `AuthError` / `meta` guards. |
-| `src/lib/react-query/error-toast-message.ts` | `errorToastDescription` for toast body text. |
-| `src/lib/react-query/register.ts` | TanStack `Register` typing for `meta`. |
-| [toast-system.md](./toast-system.md) | `appToast` API and styling. |
+| File                                         | Role                                                           |
+| -------------------------------------------- | -------------------------------------------------------------- |
+| `src/lib/api/client.ts`                      | Refresh queue, network retry, throws `ApiError` / `AuthError`. |
+| `src/lib/api/errors.ts`                      | `ApiError`, `AuthError`, payload normalization.                |
+| `src/lib/react-query/query-client.ts`        | Global toasts, RQ `retry`, `AuthError` / `meta` guards.        |
+| `src/lib/react-query/error-toast-message.ts` | `errorToastDescription` for toast body text.                   |
+| `src/lib/react-query/register.ts`            | TanStack `Register` typing for `meta`.                         |
+| [toast-system.md](./toast-system.md)         | `appToast` API and styling.                                    |

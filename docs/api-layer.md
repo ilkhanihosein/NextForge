@@ -103,11 +103,11 @@ Per-call flags passed as **`requestOptions`** on **`http.get(url, { …, request
 
 Most common cases:
 
-| Option | Default | When to touch it |
-| ------ | ------- | ---------------- |
-| **`secure`** | `true` | Set **`false`** for public routes so no `Authorization: Bearer` is sent. |
+| Option                | Default | When to touch it                                                               |
+| --------------------- | ------- | ------------------------------------------------------------------------------ |
+| **`secure`**          | `true`  | Set **`false`** for public routes so no `Authorization: Bearer` is sent.       |
 | **`skipAuthRefresh`** | `false` | Set **`true`** with public reads so 401/403 does not trigger the refresh flow. |
-| **`sendAppHeaders`** | `true` | Set **`false`** to skip OS / locale / country headers from the client factory. |
+| **`sendAppHeaders`**  | `true`  | Set **`false`** to skip OS / locale / country headers from the client factory. |
 
 Full field list: [RequestOptions (full reference)](#requestoptions-full-reference).
 
@@ -127,25 +127,25 @@ Older internal comments mentioned a legacy transport label; behavior here is the
 
 ### Public exports (overview)
 
-| Export | File | Role |
-| ------ | ---- | ---- |
-| `http`, `coreHttp` | `http.ts` | **`get` / `post` / …** → **`Promise<T>`** |
-| `api`, `coreApi` | `http.ts` | Descriptor **`{ fetch, cancel, queryKey }`** per call |
-| `apiClient`, `coreApiClient` | `http.ts` | Raw Axios |
-| `postsQueryPrefix`, `usersQueryPrefix` | `query-keys.ts` | **Prefix** segments for **`invalidateQueries`** |
-| `tokenStore` | `token-store.ts` | Token read/write |
-| `BASE_URLS`, `HEADERS`, … | `constants.ts` | URLs and header names |
-| `serializeParams` | `serialize-params.ts` | Query serialization for `paramsSerializer` |
-| `normalizeErrorPayload`, `toApiError`, `toAuthError` | `errors.ts` | Error mapping |
+| Export                                               | File                  | Role                                                  |
+| ---------------------------------------------------- | --------------------- | ----------------------------------------------------- |
+| `http`, `coreHttp`                                   | `http.ts`             | **`get` / `post` / …** → **`Promise<T>`**             |
+| `api`, `coreApi`                                     | `http.ts`             | Descriptor **`{ fetch, cancel, queryKey }`** per call |
+| `apiClient`, `coreApiClient`                         | `http.ts`             | Raw Axios                                             |
+| `postsQueryPrefix`, `usersQueryPrefix`               | `query-keys.ts`       | **Prefix** segments for **`invalidateQueries`**       |
+| `tokenStore`                                         | `token-store.ts`      | Token read/write                                      |
+| `BASE_URLS`, `HEADERS`, …                            | `constants.ts`        | URLs and header names                                 |
+| `serializeParams`                                    | `serialize-params.ts` | Query serialization for `paramsSerializer`            |
+| `normalizeErrorPayload`, `toApiError`, `toAuthError` | `errors.ts`           | Error mapping                                         |
 
 ### RequestOptions (full reference)
 
-| Field | Default | Meaning |
-| ----- | ------- | ------- |
-| `secure` | `true` | When not `false`, attach `Authorization: Bearer` if a token exists. |
-| `sendAppHeaders` | `true` | When not `false`, send `os` and optional locale/country from `ApiClientConfig`. |
-| `sendCartUuid` | `false` | When `true`, set `Cart-UUID` if `getCartUuid` is configured. |
-| `skipAuthRefresh` | `false` | When `true`, skip refresh + retry on **401** / **403**. |
+| Field             | Default | Meaning                                                                         |
+| ----------------- | ------- | ------------------------------------------------------------------------------- |
+| `secure`          | `true`  | When not `false`, attach `Authorization: Bearer` if a token exists.             |
+| `sendAppHeaders`  | `true`  | When not `false`, send `os` and optional locale/country from `ApiClientConfig`. |
+| `sendCartUuid`    | `false` | When `true`, set `Cart-UUID` if `getCartUuid` is configured.                    |
+| `skipAuthRefresh` | `false` | When `true`, skip refresh + retry on **401** / **403**.                         |
 
 ### Interceptors
 
@@ -170,9 +170,9 @@ Interceptors **do not show toasts** — see **[api-error-handling.md](./api-erro
 
 ## Related documents
 
-| Topic | Document |
-| ----- | -------- |
-| React Query | [data-fetching-and-react-query.md](./data-fetching-and-react-query.md) |
-| Error handling | [api-error-handling.md](./api-error-handling.md) |
-| Architecture | [architecture.md](./architecture.md) |
-| Env | [env-configuration.md](./env-configuration.md) |
+| Topic          | Document                                                               |
+| -------------- | ---------------------------------------------------------------------- |
+| React Query    | [data-fetching-and-react-query.md](./data-fetching-and-react-query.md) |
+| Error handling | [api-error-handling.md](./api-error-handling.md)                       |
+| Architecture   | [architecture.md](./architecture.md)                                   |
+| Env            | [env-configuration.md](./env-configuration.md)                         |

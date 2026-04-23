@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { StarterStackCards } from "@/components/home/starter-stack-cards";
 import { usePost } from "@/features/posts/hooks/use-post";
 
 type PostDetailProps = {
@@ -62,22 +63,25 @@ export function PostDetail({ postId }: PostDetailProps) {
   }
 
   return (
-    <article className="rounded-2xl border border-border/70 bg-panel p-6 shadow-soft">
-      <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
-        Post #{data.id} · User {data.userId}
-      </p>
-      <h1 className="mt-2 text-2xl font-bold tracking-tight text-foreground">
-        {data.title}
-      </h1>
-      <p className="mt-6 whitespace-pre-wrap text-sm leading-relaxed text-muted-foreground">
-        {data.body}
-      </p>
-      <Link
-        href={listHref}
-        className="mt-8 inline-flex text-sm font-semibold text-brand underline-offset-4 hover:underline"
-      >
-        ← Back
-      </Link>
-    </article>
+    <div>
+      <article className="rounded-2xl border border-border/70 bg-panel p-6 shadow-soft">
+        <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+          Post #{data.id} · User {data.userId}
+        </p>
+        <h1 className="mt-2 text-2xl font-bold tracking-tight text-foreground">
+          {data.title}
+        </h1>
+        <p className="mt-6 whitespace-pre-wrap text-sm leading-relaxed text-muted-foreground">
+          {data.body}
+        </p>
+        <Link
+          href={listHref}
+          className="mt-8 inline-flex text-sm font-semibold text-brand underline-offset-4 hover:underline"
+        >
+          ← Back
+        </Link>
+      </article>
+      <StarterStackCards variant="compact" />
+    </div>
   );
 }

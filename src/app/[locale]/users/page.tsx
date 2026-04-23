@@ -26,7 +26,7 @@ export default async function UsersIndexPage({ params }: UsersIndexPageProps) {
             Home
           </Link>
           <Link
-            href={`/${typedLocale}#module-posts`}
+            href={`/${typedLocale}#features-playground`}
             className="text-brand underline-offset-4 hover:underline"
           >
             Posts module
