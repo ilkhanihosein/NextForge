@@ -88,6 +88,24 @@ const en = {
     footerDocs: "External docs",
     trySamples: "Jump to live samples",
   },
+  auth: {
+    navLogin: "Log in",
+    navProfile: "Profile",
+    navLogout: "Log out",
+    sessionLoading: "Session…",
+    loggingOut: "Signing out…",
+    loginTitle: "Sign in",
+    loginSubtitle: "Sample auth wired to tokenStore + the same Axios client as your API.",
+    demoHint: "Demo account: demo@example.com / demo123 (served by `/api/auth/login`).",
+    emailLabel: "Email",
+    passwordLabel: "Password",
+    submitLabel: "Continue",
+    submittingLabel: "Signing in…",
+    redirecting: "Redirecting…",
+    profileTitle: "Your profile",
+    profileIntro: "This route is protected on the client. Tokens persist in localStorage via the existing token store.",
+    profileEmail: "Signed in as",
+  },
 };
 
 export default en;

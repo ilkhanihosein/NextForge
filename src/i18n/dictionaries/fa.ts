@@ -86,6 +86,24 @@ const fa = {
     footerDocs: "مستندات بیرونی",
     trySamples: "پرش به نمونه‌های زنده",
   },
+  auth: {
+    navLogin: "ورود",
+    navProfile: "پروفایل",
+    navLogout: "خروج",
+    sessionLoading: "نشست…",
+    loggingOut: "در حال خروج…",
+    loginTitle: "ورود",
+    loginSubtitle: "نمونهٔ احراز هویت با tokenStore و همان کلاینت Axios.",
+    demoHint: "حساب آزمایشی: demo@example.com / demo123 (مسیر `/api/auth/login`).",
+    emailLabel: "ایمیل",
+    passwordLabel: "رمز عبور",
+    submitLabel: "ادامه",
+    submittingLabel: "در حال ورود…",
+    redirecting: "در حال هدایت…",
+    profileTitle: "پروفایل شما",
+    profileIntro: "این مسیر در سمت کلاینت محافظت می‌شود. توکن‌ها در localStorage با همان token store ذخیره می‌شوند.",
+    profileEmail: "ورود با",
+  },
 };
 
 export default fa;

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AuthNav } from "@/features/auth";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { siteConfig, type Locale } from "@/config/site";
@@ -62,6 +63,7 @@ export function SiteHeader({ locale, dictionary }: SiteHeaderProps) {
           </nav>
         </div>
         <div className="flex shrink-0 items-center gap-2">
+          <AuthNav locale={locale} />
           <LanguageSwitcher />
           <ThemeToggle />
         </div>
