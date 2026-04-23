@@ -1,5 +1,5 @@
 import { api } from "@/lib/api/http";
-import type { User } from "@/features/users/api/users.types";
+import type { User } from "@/features/users/types/user.types";
 
 /** Unauthenticated list reads: no Bearer header, no refresh retry on 401/403. */
 export const usersListRequestOptions = { secure: false, skipAuthRefresh: true } as const;

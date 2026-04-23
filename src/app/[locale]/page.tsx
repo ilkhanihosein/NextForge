@@ -74,17 +74,33 @@ export default async function LocaleHomePage({ params }: LocalePageProps) {
             <li>`features/[domain]/api/` — service + queries per domain module</li>
           </ul>
 
-          <div className="mt-5">
-            <p className="mb-2 text-xs uppercase tracking-wider text-muted-foreground">
-              Module: posts (`features/posts`)
-            </p>
+          <div id="module-posts" className="mt-5 scroll-mt-4">
+            <div className="mb-2 flex flex-wrap items-end justify-between gap-2">
+              <p className="text-xs uppercase tracking-wider text-muted-foreground">
+                Module: posts (`features/posts`)
+              </p>
+              <Link
+                href={`/${typedLocale}/users`}
+                className="text-xs font-semibold text-brand underline-offset-4 hover:underline"
+              >
+                Users →
+              </Link>
+            </div>
             <PostsPreview />
           </div>
 
-          <div className="mt-5">
-            <p className="mb-2 text-xs uppercase tracking-wider text-muted-foreground">
-              Module: users (`features/users`)
-            </p>
+          <div id="module-users" className="mt-5 scroll-mt-4">
+            <div className="mb-2 flex flex-wrap items-end justify-between gap-2">
+              <p className="text-xs uppercase tracking-wider text-muted-foreground">
+                Module: users (`features/users`)
+              </p>
+              <Link
+                href={`/${typedLocale}#module-posts`}
+                className="text-xs font-semibold text-brand underline-offset-4 hover:underline"
+              >
+                Posts →
+              </Link>
+            </div>
             <UsersPreview />
           </div>
 
