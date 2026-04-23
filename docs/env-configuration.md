@@ -16,6 +16,7 @@
 | -------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------ |
 | `NEXT_PUBLIC_API_BASE_URL` | No       | Default API base (`BASE_URLS.default`). Defaults to `https://jsonplaceholder.typicode.com` if unset.                     |
 | `NEXT_PUBLIC_API_CORE_URL` | No       | Optional second base (`BASE_URLS.core`). If unset, the core client reuses the same Axios instance as the default client. |
+| `NEXT_PUBLIC_APP_URL`      | No       | Absolute app origin (no trailing slash) used when **`performTokenRefresh`** runs without `window` (SSR). Defaults to `http://localhost:3000`. Auth: [auth-system.md](./auth-system.md). |
 
 **Convention:** only non-secrets belong in `NEXT_PUBLIC_*`. Never put server-only secrets in `NEXT_PUBLIC_` variables—they are exposed to the browser bundle.
 
@@ -30,4 +31,7 @@
 | Topic                      | Document                             |
 | -------------------------- | ------------------------------------ |
 | Architecture               | [architecture.md](./architecture.md) |
+| Auth + refresh             | [auth-system.md](./auth-system.md)  |
 | HTTP client base URL usage | [api-layer.md](./api-layer.md)       |
+
+**Core stack:** [Documentation index](./README.md) · [Architecture](./architecture.md) · [API layer](./api-layer.md) · [Auth](./auth-system.md)

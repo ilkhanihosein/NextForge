@@ -105,3 +105,10 @@ Global handlers **skip toasts for `AuthError`** on both queries and mutations so
 | `src/lib/react-query/error-toast-message.ts` | `errorToastDescription` for toast body text.                   |
 | `src/lib/react-query/register.ts`            | TanStack `Register` typing for `meta`.                         |
 | [toast-system.md](./toast-system.md)         | `appToast` API and styling.                                    |
+| [auth-system.md](./auth-system.md)          | Session facade vs interceptor `onAuthFailure`, `AuthError` UX. |
+
+---
+
+## Related guides
+
+**Core stack:** [Documentation index](./README.md) · [Architecture](./architecture.md) · [API layer](./api-layer.md) · [Auth](./auth-system.md)

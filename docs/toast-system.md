@@ -36,3 +36,5 @@ appToast.success({ title: "Saved", description: "Your changes are stored." });
 | -------------------------- | -------------------------------------------------------------- |
 | i18n + RTL                 | [internationalization.md](./internationalization.md)           |
 | Theme tokens used by cards | [theming-and-design-tokens.md](./theming-and-design-tokens.md) |
+
+**Core stack:** [Documentation index](./README.md) · [Architecture](./architecture.md) · [API layer](./api-layer.md) · [Auth](./auth-system.md)

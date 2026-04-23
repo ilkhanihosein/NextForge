@@ -1,4 +1,12 @@
 export {
+  clearSession,
+  ensureSessionCookiesFromStore,
+  getSession,
+  isAuthenticated,
+  setSession,
+} from "@/features/auth/session";
+export type { AuthSessionSnapshot } from "@/features/auth/session";
+export {
   loginWithPassword,
   authLoginRequestOptions,
 } from "@/features/auth/api/login-api";
@@ -11,7 +19,9 @@ export { LoginForm } from "@/features/auth/ui/login-form";
 export { AuthGate } from "@/features/auth/ui/auth-gate";
 export { AuthNav } from "@/features/auth/ui/auth-nav";
 export { AuthProfileEmail } from "@/features/auth/ui/auth-profile-email";
+export { RequireRole } from "@/features/auth/ui/require-role";
 export type {
+  AuthRole,
   AuthUser,
   LoginRequest,
   LoginResponse,

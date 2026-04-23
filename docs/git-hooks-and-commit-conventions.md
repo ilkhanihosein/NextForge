@@ -71,3 +71,5 @@ This template does **not** ship `.github/workflows/ci.yml`. Add a workflow that 
 | --------------- | ------------------------------------------ |
 | Troubleshooting | [troubleshooting.md](./troubleshooting.md) |
 | Architecture    | [architecture.md](./architecture.md)       |
+
+**Core stack:** [Documentation index](./README.md) · [API layer](./api-layer.md) · [Auth](./auth-system.md)

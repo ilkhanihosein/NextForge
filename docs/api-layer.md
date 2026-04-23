@@ -152,15 +152,31 @@ Older internal comments mentioned a legacy transport label; behavior here is the
 - **`withCredentials: false`** on every request.
 - **`paramsSerializer`** → `serializeParams` (arrays as `key[]=…`).
 - **FormData:** strip default `Content-Type` so Axios sets multipart boundary.
-- **401 + 403:** single-flight refresh queue, then retry once (when refresh is configured).
+- **401 + 403:** single-flight **refresh** queue (see below), then **one** retry of the original request when refresh succeeds and **`skipAuthRefresh`** is not set.
 - **412:** clear tokens + `onAuthFailure` + `AuthError` (`precondition_failed`).
+- **Cancellation:** Axios **`isCancel`** rejects propagate unchanged (no refresh, no network retry).
 - **Network / timeout:** one delayed retry (`_networkRetried`), then `ApiError` with `NETWORK_ERROR`.
 
 Interceptors **do not show toasts** — see **[api-error-handling.md](./api-error-handling.md)** for final vs silent failures.
 
-### Auth and refresh (placeholder)
+### Auth and refresh (implemented)
 
-`refreshTokens` in `http.ts` is a **stub** — replace with your real endpoint (see `REFRESH_PATH` in `constants.ts`).
+`src/lib/api/http.ts` wires **`refreshTokens`** to **`performTokenRefresh`** in **`src/lib/api/refresh-session.ts`**: a **`fetch`** to **`/api/auth/refresh`** (not the Axios client) to avoid interceptor recursion. On success, tokens are written via the client config’s **`setTokens`** (backed by **`tokenStore`**) and **`syncSessionCookiesFromTokens`** inside **`performTokenRefresh`**. On hard failure, **`clearTokens`**, **`onAuthFailure`** (clears session cookies client-side), and an **`AuthError`** are produced.
+
+**Session orchestration in features** (login, logout, bootstrap) uses the **Auth Session Facade** — [auth-system.md](./auth-system.md). The interceptor path intentionally stays in **`lib`** so **`lib` does not import `features`**.
+
+### Error normalization (response → thrown errors)
+
+1. **HTTP error response** (or network / timeout) enters the **response error interceptor** in **`createApiClient`** (`src/lib/api/client.ts`).
+2. **Payload shaping:** **`normalizeErrorPayload`** (`src/lib/api/errors.ts`) reads common JSON shapes (`message`, `meta`, Laravel-style `errors`, etc.).
+3. **Classification:**
+   - **412** → **`AuthError`** (`precondition_failed`) after clearing tokens and **`onAuthFailure`**.
+   - **401 / 403** after failed or skipped refresh → **`AuthError`**.
+   - Other statuses → **`ApiError`** via **`toApiError`** with **`status`**, **`message`**, **`fieldErrors`** when present.
+   - No response (network) after optional one retry → **`ApiError`** with **`NETWORK_ERROR`**.
+4. **React Query** and **global toasts** see only these **typed** errors — not raw **`AxiosError`** — for queries that use **`http`** / **`api`** through this client.
+
+Details and toast rules: **[api-error-handling.md](./api-error-handling.md)**.
 
 ### Legacy import
 
@@ -172,7 +188,11 @@ Interceptors **do not show toasts** — see **[api-error-handling.md](./api-erro
 
 | Topic          | Document                                                               |
 | -------------- | ---------------------------------------------------------------------- |
+| Doc index + learning path | [README.md](./README.md)                                      |
 | React Query    | [data-fetching-and-react-query.md](./data-fetching-and-react-query.md) |
 | Error handling | [api-error-handling.md](./api-error-handling.md)                       |
+| Auth + session | [auth-system.md](./auth-system.md)                                     |
 | Architecture   | [architecture.md](./architecture.md)                                   |
 | Env            | [env-configuration.md](./env-configuration.md)                         |
+
+**Core stack:** [Documentation index](./README.md) · [Architecture](./architecture.md) · [Auth](./auth-system.md)

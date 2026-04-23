@@ -2,10 +2,9 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { tokenStore } from "@/lib/api/token-store";
-import { loginWithPassword } from "@/features/auth/api/login-api";
-import { authMeQueryOptions } from "@/features/auth/api/get-auth-me";
+import { setSession } from "@/features/auth/session";
 import type { LoginRequest } from "@/features/auth/types/auth.types";
+import { loginWithPassword } from "@/features/auth/api/login-api";
 
 type UseLoginOptions = {
   locale: string;
@@ -19,12 +18,15 @@ export function useLogin({ locale, redirectTo }: UseLoginOptions) {
 
   return useMutation({
     mutationFn: (input: LoginRequest) => loginWithPassword(input),
-    onSuccess: (data) => {
-      tokenStore.setTokens({
-        accessToken: data.accessToken,
-        refreshToken: data.refreshToken,
-      });
-      queryClient.setQueryData(authMeQueryOptions().queryKey, data.user);
+    onSuccess: async (data) => {
+      await setSession(
+        {
+          accessToken: data.accessToken,
+          refreshToken: data.refreshToken,
+        },
+        data.user,
+        queryClient,
+      );
       const target = redirectTo ?? `/${locale}/profile`;
       router.push(target);
     },

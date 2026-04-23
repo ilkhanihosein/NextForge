@@ -44,3 +44,5 @@ This template uses **App Router locale segments** and **typed dictionaries**—n
 | -------------- | ------------------------------------ |
 | Overall layout | [architecture.md](./architecture.md) |
 | Toasts + RTL   | [toast-system.md](./toast-system.md) |
+
+**Core stack:** [Documentation index](./README.md) · [Architecture](./architecture.md) · [API layer](./api-layer.md) · [Auth](./auth-system.md)

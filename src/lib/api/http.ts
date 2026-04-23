@@ -1,15 +1,15 @@
 import { createApiClient, createHttp } from "@/lib/api/client";
 import { createDescriptorClient } from "@/lib/api/request";
 import { BASE_URLS } from "@/lib/api/constants";
+import {
+  clearSessionCookiesClient,
+  performTokenRefresh,
+} from "@/lib/api/refresh-session";
 import { tokenStore } from "@/lib/api/token-store";
 import type { ApiTokens } from "@/lib/api/types";
 
-const refreshTokens = async (_refreshToken: string): Promise<ApiTokens> => {
-  void _refreshToken;
-  return {
-    accessToken: tokenStore.getAccessToken(),
-    refreshToken: tokenStore.getRefreshToken(),
-  };
+const refreshTokens = async (refreshToken: string): Promise<ApiTokens> => {
+  return performTokenRefresh(refreshToken);
 };
 
 const sharedClientConfig = {
@@ -19,6 +19,9 @@ const sharedClientConfig = {
   setTokens: tokenStore.setTokens,
   clearTokens: tokenStore.clearTokens,
   refreshTokens,
+  onAuthFailure: () => {
+    void clearSessionCookiesClient();
+  },
 };
 
 export const apiClient = createApiClient({

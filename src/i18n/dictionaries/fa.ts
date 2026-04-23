@@ -103,6 +103,13 @@ const fa = {
     profileTitle: "پروفایل شما",
     profileIntro: "این مسیر در سمت کلاینت محافظت می‌شود. توکن‌ها در localStorage با همان token store ذخیره می‌شوند.",
     profileEmail: "ورود با",
+    adminBadge: "مدیر",
+    adminBadgeTitle: "نقش مدیر (نمونهٔ RBAC)",
+    navDashboard: "داشبورد",
+    dashboardTitle: "داشبورد مدیر",
+    dashboardIntro:
+      "این صفحه با RequireRole و نقش admin محافظت شده است؛ کاربر غیرمدیر پیام عدم دسترسی می‌بیند.",
+    forbiddenRole: "دسترسی به این صفحه برای شما مجاز نیست.",
   },
 };
 

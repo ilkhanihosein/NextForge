@@ -2,6 +2,8 @@
 
 **Canonical reference** for how product features are structured in this repo. **Posts** (`src/features/posts/`) and **Users** (`src/features/users/`) implement this blueprint end-to-end; copy them before inventing a new shape.
 
+**Auth** (`src/features/auth/`) follows the same **`api/` · `hooks/` · `ui/` · `types/`** contract plus a dedicated **`session/`** folder for the **Auth Session Facade** (orchestration only — see [auth-system.md](./auth-system.md)). Use it as the reference for **login**, **logout**, **`me`**, and **RBAC** wiring, not for generic CRUD patterns.
+
 ---
 
 ## Folder structure
@@ -133,4 +135,8 @@ This blueprint focuses on **client** React Query flows. For RSC data, you can st
 
 - [getting-started.md](./getting-started.md) — fast path + copy-paste template
 - [architecture.md](./architecture.md) — global layers and request lifecycle
+- [api-layer.md](./api-layer.md) — `http`, interceptors, descriptors
+- [auth-system.md](./auth-system.md) — session facade, cookies vs `tokenStore`, refresh
 - [data-fetching-and-react-query.md](./data-fetching-and-react-query.md) — `queryOptions`, devtools, toasts
+
+**Core stack:** [Documentation index](./README.md) · [Architecture](./architecture.md) · [API layer](./api-layer.md) · [Auth](./auth-system.md)

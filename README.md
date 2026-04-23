@@ -35,7 +35,8 @@ Keywords: **next.js starter**, **multilingual next.js**, **app router boilerplat
 | **[`docs/getting-started.md`](./docs/getting-started.md)**     | Install, env, dev server, **how to add a feature in ~2 minutes**, copy-paste template |
 | **[`docs/feature-blueprint.md`](./docs/feature-blueprint.md)** | **Canonical** folder layout, layer rules, diagram, mistakes, FAQ                      |
 | **[`docs/architecture.md`](./docs/architecture.md)**           | App Router layers, proxy, request lifecycle                                           |
-| **[`docs/README.md`](./docs/README.md)**                       | Full index (API layer, i18n, theming, errors, git hooks)                              |
+| **[`docs/auth-system.md`](./docs/auth-system.md)**             | Hybrid auth, session facade, refresh, Edge gate, RBAC                                 |
+| **[`docs/README.md`](./docs/README.md)**                       | Full index + **[Developer learning path](./docs/README.md#developer-learning-path)** (guided ~30 min)              |
 
 **API mental model:** **`http.get` / `http.post`** = default simple path. **`api.*`** = optional request **descriptors** when you need `{ fetch, cancel, queryKey }` together — [`docs/api-layer.md`](./docs/api-layer.md).
 

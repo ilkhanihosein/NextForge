@@ -1,8 +1,11 @@
+export type AuthRole = "admin" | "user";
+
 /** Minimal identity returned by the sample `/api/auth` routes. */
 export type AuthUser = {
   id: number;
   email: string;
   name: string;
+  role: AuthRole;
 };
 
 export type LoginRequest = {

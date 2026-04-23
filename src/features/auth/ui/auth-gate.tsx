@@ -3,7 +3,7 @@
 import { useEffect, useSyncExternalStore } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/features/auth/hooks/use-auth";
-import { tokenStore } from "@/lib/api/token-store";
+import { isAuthenticated } from "@/features/auth/session";
 import { useAppContext } from "@/context/app-context";
 
 type AuthGateProps = {
@@ -23,8 +23,8 @@ export function AuthGate({ locale, children }: AuthGateProps) {
     () => false,
   );
 
-  const { isAuthenticated, isSessionPending, isLoading } = useAuth();
-  const hasToken = isClient && Boolean(tokenStore.getAccessToken());
+  const { isAuthenticated: hasUser, isSessionPending, isLoading } = useAuth();
+  const hasToken = isClient && isAuthenticated();
 
   useEffect(() => {
     if (!isClient) return;
@@ -60,7 +60,7 @@ export function AuthGate({ locale, children }: AuthGateProps) {
     );
   }
 
-  if (!isAuthenticated) {
+  if (!hasUser) {
     return (
       <div className="rounded-2xl border border-border/70 bg-panel p-8 text-center text-sm text-muted-foreground">
         {dictionary.auth.redirecting}

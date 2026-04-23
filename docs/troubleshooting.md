@@ -1,5 +1,11 @@
 # Troubleshooting
 
+Quick fixes for local tooling and routing. For **auth / cookies / redirect** symptoms, also read [auth-system.md](./auth-system.md#common-issues-debugging) and the **Developer learning path** in [README.md](./README.md#developer-learning-path).
+
+**Core stack:** [Documentation index](./README.md) · [Architecture](./architecture.md) · [API layer](./api-layer.md) · [Auth](./auth-system.md)
+
+---
+
 ## Next.js: “inferred your workspace root” / multiple lockfiles
 
 **Symptom:** `next build` warns that Turbopack picked a parent directory because another `package-lock.json` exists (e.g. under `$HOME`).
@@ -51,10 +57,31 @@
 
 ---
 
+## Auth: API works but redirect to login on navigation
+
+**Symptom:** `http` calls succeed with a Bearer token, but visiting **`/en/profile`** (or another protected route) sends you to login.
+
+**Cause:** **`src/proxy.ts`** only sees **cookies**, not `localStorage`. If tokens were set without syncing cookies, the Edge gate has no session.
+
+**Fix:** Ensure login (or recovery) goes through **`setSession`** from **`@/features/auth/session`**, or mount **`AuthSessionBootstrap`** so existing tokens are mirrored. See [auth-system.md](./auth-system.md).
+
+---
+
+## Auth: “authenticated” in code vs in UI
+
+**Symptom:** confusion between **`isAuthenticated()`** (facade) and **`useAuth().isAuthenticated`**.
+
+**Rule:** Facade = **access token present**. Hook property = **`auth/me` returned a user**. Details: [auth-system.md](./auth-system.md#naming-facade-vs-useauth).
+
+---
+
 ## Related documents
 
 | Topic        | Document                                                                     |
 | ------------ | ---------------------------------------------------------------------------- |
 | Env keys     | [env-configuration.md](./env-configuration.md)                               |
+| Auth + session | [auth-system.md](./auth-system.md)                                        |
 | i18n routing | [internationalization.md](./internationalization.md)                         |
 | Git hooks    | [git-hooks-and-commit-conventions.md](./git-hooks-and-commit-conventions.md) |
+
+**Core stack:** [Documentation index](./README.md) · [Architecture](./architecture.md) · [API layer](./api-layer.md) · [Auth](./auth-system.md)

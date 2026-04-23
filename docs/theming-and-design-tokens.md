@@ -32,3 +32,5 @@ Toast cards use **`.toast-card--*`** variants with light and **`.dark .toast-car
 | ------------ | ------------------------------------ |
 | Architecture | [architecture.md](./architecture.md) |
 | Toasts       | [toast-system.md](./toast-system.md) |
+
+**Core stack:** [Documentation index](./README.md) · [Architecture](./architecture.md) · [API layer](./api-layer.md) · [Auth](./auth-system.md)

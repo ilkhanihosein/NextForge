@@ -2,6 +2,8 @@
 
 Use this page to **run the app in under a minute**, then **add your first feature in under two minutes** using the same pattern as **Posts** and **Users**.
 
+**New to the repo?** Start with the linear **[Developer learning path](./README.md#developer-learning-path)** in [`docs/README.md`](./README.md) (~30 minutes to a clear mental model).
+
 ---
 
 ## Run the app
@@ -36,8 +38,19 @@ Use this page to **run the app in under a minute**, then **add your first featur
 | ------------------------------------------------------- | ---------------------------------------------------------------------- |
 | **Canonical feature layout** (folders, rules, mistakes) | [feature-blueprint.md](./feature-blueprint.md)                         |
 | **Layers** (app, proxy, `lib/api`, React Query)         | [architecture.md](./architecture.md)                                   |
+| **How auth works** (tokens, cookies, facade, refresh)   | [auth-system.md](./auth-system.md)                                     |
 | **`http` vs `api` descriptors**                         | [api-layer.md](./api-layer.md)                                         |
 | **Queries, keys, toasts**                               | [data-fetching-and-react-query.md](./data-fetching-and-react-query.md) |
+
+---
+
+## How auth works in this system (short)
+
+1. **After login**, tokens live in **`tokenStore`** (for **Axios** `Authorization`) **and** are mirrored to **HttpOnly cookies** (for **`src/proxy.ts`** on full page loads).
+2. **Feature code** should call **`setSession` / `clearSession`** from **`@/features/auth/session`** so both stay in sync.
+3. **401/403** on API calls may trigger **refresh** inside the Axios interceptor (see [auth-system.md](./auth-system.md#refresh-token-lifecycle)); that is separate from the facade and stays in **`src/lib/api/`**.
+
+Full detail, RBAC, and pitfalls: **[auth-system.md](./auth-system.md)**.
 
 ---
 
@@ -148,3 +161,5 @@ Then import `CommentsList` (or your equivalent) from `@/features/comments` in a 
 ## Scripts reminder
 
 `npm run lint`, `npm run typecheck`, `npm run build` — see root [README.md](../README.md#available-scripts).
+
+**Core stack:** [Documentation index](./README.md) · [Architecture](./architecture.md) · [API layer](./api-layer.md) · [Auth](./auth-system.md)

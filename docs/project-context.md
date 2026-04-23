@@ -8,6 +8,7 @@ This repository is a **Next.js 16** application boilerplate, not a standalone RE
 - **Styling:** Tailwind CSS v4 with design tokens in CSS variables.
 - **Rendering:** Server Components by default; Client Components where interactivity is required (`"use client"`).
 - **Data:** Axios-based HTTP client (`src/lib/api/`) plus TanStack Query for client-side caching and mutations.
+- **Auth (template):** hybrid **client token store** + **HttpOnly session cookies** for Edge **`proxy`**; **Auth Session Facade** in `src/features/auth/session/` coordinates login/logout without duplicating refresh logic — [auth-system.md](./auth-system.md).
 - **i18n:** Locale-prefixed routes (`/en`, `/fa`) with typed dictionaries—no `next-intl` package in this template.
 - **Quality:** ESLint (Next config + Prettier), Prettier, Husky, lint-staged, Commitlint, Commitizen.
 
@@ -20,3 +21,11 @@ This repository is a **Next.js 16** application boilerplate, not a standalone RE
 ## Reference sample folder
 
 The `tadawi/` directory (if present locally) is an **optional benchmark** only: it is listed in `.gitignore` and excluded from ESLint/TypeScript so it does not affect CI or editor diagnostics. Do not treat it as part of the shipped product code.
+
+---
+
+## Doc navigation
+
+**Guided course:** [Developer learning path](./README.md#developer-learning-path) in [README.md](./README.md).
+
+**Core stack:** [Documentation index](./README.md) · [Architecture](./architecture.md) · [API layer](./api-layer.md) · [Auth](./auth-system.md)

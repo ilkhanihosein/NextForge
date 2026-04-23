@@ -61,16 +61,29 @@ export const postsQueryOptions = (limit: number) =>
 
 - **`staleTime`:** 2 minutes.
 - **`gcTime`:** 10 minutes.
-- **`retry`:** Skips **`AuthError`** and typical **4xx** **`ApiError`**; retries transient/server issues (up to 2 attempts).
-- **`retryDelay`:** Exponential, cap 8s.
+- **`retry`:** Implemented as **`shouldRetry(failureCount, error)`** — returns **`false`** for **`isCancel`** (Axios cancellation), **`AuthError`**, and **`ApiError`** with **`status` in 400–499**; otherwise allows up to **two retries after the initial failure** (`failureCount < 2` → third attempt is the last). Mutations use the same predicate.
+- **`retryDelay`:** Exponential backoff, cap 8s.
 - **`refetchOnWindowFocus`:** `false` globally (override per query if needed).
 - **`refetchOnReconnect`:** `true`.
+
+**Interaction with the HTTP client:** Axios may already have retried once (refresh or network) before React Query sees an error. Global toasts fire only on **final** cache errors — see [api-error-handling.md](./api-error-handling.md#silent-retries-no-toast).
 
 ### Global error surfacing
 
 - **`QueryCache.onError`** / **`MutationCache.onError`** → **`appToast.error`** only on **final** failure (after Axios + RQ retries). Silent paths: refresh queue, network retry — **[api-error-handling.md](./api-error-handling.md)**.
 - **`AuthError`** is never globally toasted.
-- **`meta.suppressErrorToast`** / **`meta.errorToastTitle`** — **`src/lib/react-query/register.ts`**; **`errorToastDescription`** — **`src/lib/react-query/error-toast-message.ts`**.
+- **`meta`** (typed in **`src/lib/react-query/register.ts`**):
+
+| Field | Effect |
+| ----- | ------ |
+| **`suppressErrorToast`** | When truthy, skips the global error toast for that query/mutation. |
+| **`errorToastTitle`** | Overrides the default title (**“Request failed”** / **“Action failed”**). |
+
+Toast **body** text: **`errorToastDescription`** in **`src/lib/react-query/error-toast-message.ts`** (prefers **`ApiError.message`**, else a short **`fieldErrors`** summary).
+
+### Error types reaching React Query
+
+Queries using **`http`** through **`apiClient`** reject with **`ApiError`** or **`AuthError`**, not raw **`AxiosError`**. Normalization happens in **`src/lib/api/client.ts`** + **`src/lib/api/errors.ts`** — diagram: [api-layer.md](./api-layer.md#error-normalization-response--thrown-errors).
 
 ---
 
@@ -94,5 +107,8 @@ Keep **`queryFn`** thin. Prefer **`http.*`** by default; use **`descriptor.fetch
 | --------------- | ------------------------------------------------ |
 | HTTP client     | [api-layer.md](./api-layer.md)                   |
 | Errors + toasts | [api-error-handling.md](./api-error-handling.md) |
+| Auth + session  | [auth-system.md](./auth-system.md)               |
 | Toasts          | [toast-system.md](./toast-system.md)             |
 | Architecture    | [architecture.md](./architecture.md)             |
+
+**Core stack:** [Documentation index](./README.md) · [Architecture](./architecture.md) · [API layer](./api-layer.md) · [Auth](./auth-system.md)

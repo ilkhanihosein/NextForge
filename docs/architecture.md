@@ -14,7 +14,7 @@ Typical first steps when starting a **new** product from this repo:
 2. **Environment:** copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_API_BASE_URL` (and any future secrets). Consider adding a Zod-validated `src/config/env.ts` so `process.env` is not scattered.
 3. **Locales:** edit `src/config/site.ts` (`locales`, `defaultLocale`, `rtlLocales`) and add dictionary files under `src/i18n/dictionaries/`.
 4. **Features:** add `src/features/<your-feature>/` using the same **`api/` · `hooks/` · `ui/` · `types/`** layout as **`posts`** and **`users`** (see [feature-blueprint.md](./feature-blueprint.md)). Remove or replace the sample modules when unused.
-5. **API layer:** extend `src/lib/api/` (token refresh implementation, extra clients, headers). Wire real auth in `src/lib/api/http.ts`.
+5. **API layer:** extend `src/lib/api/` (extra clients, headers, error shapes). Wire your backend into Route Handlers and **`performTokenRefresh`** as needed — overview: [auth-system.md](./auth-system.md).
 6. **Theming:** adjust semantic tokens and surfaces in `src/app/globals.css`; keep Tailwind `@theme inline` in sync if you add new `--color-*` mappings.
 7. **Routing:** keep `src/proxy.ts` aligned with `siteConfig.locales` if you add locales (Next 16 uses the `proxy` convention for edge redirects).
 
@@ -36,8 +36,9 @@ Nothing under `src/features/` is required for the **framework** of layouts, i18n
 
 ### Proxy / edge routing (`src/proxy.ts`)
 
-- **Role:** Prefix all non-static paths with a default locale when the first segment is not a known locale.
+- **Role:** Prefix all non-static paths with a default locale when the first segment is not a known locale; optionally **guard** locale-prefixed routes using **HttpOnly cookies** (no `localStorage` on the Edge).
 - **Pattern:** Same responsibility as legacy `middleware`; Next 16 surfaces it as **Proxy** in build output.
+- **Auth:** which paths are protected and how cookies are interpreted — [auth-system.md](./auth-system.md#edge-proxy-and-protected-routes).
 
 ### Feature modules (`src/features/<feature>/`)
 
@@ -87,12 +88,35 @@ Nothing under `src/features/` is required for the **framework** of layouts, i18n
 1. User action or mount triggers a **feature hook**, which calls **`useQuery`** / **`useMutation`** with options from **`api/`** (typically **`queryOptions({ queryKey, queryFn })`**).
 2. **`queryFn`** calls **`http.get` / `http.post`** (etc.) from `@/lib/api`, passing **`signal`** when you want cancellation tied to the query lifecycle.
 3. **Axios** `apiClient` applies request interceptors (e.g. `Authorization`, `x-request-id`).
-4. On **401**, optional refresh queue runs (placeholder in `http.ts` until you implement real refresh).
+4. On **401** / **403**, the Axios client may run a **single-flight refresh** and retry once (see [api-layer.md](./api-layer.md#interceptors)); refresh uses **`fetch`**, not a recursive Axios call.
 5. Errors normalize to **`ApiError`** / **`AuthError`**; Query/Mutation caches can surface **final** toasts (not per silent retry — see [api-error-handling.md](./api-error-handling.md)).
 
 Diagram (including optional **`api`** branch): [api-layer.md](./api-layer.md#request-flow).
 
 See [api-layer.md](./api-layer.md), [data-fetching-and-react-query.md](./data-fetching-and-react-query.md), and [api-error-handling.md](./api-error-handling.md).
+
+---
+
+## Mental model summary diagram (text)
+
+**Data path (typical screen):**
+
+```txt
+  UI  →  feature hooks  →  React Query  →  queryFn (queryOptions)  →  http  →  Axios  →  your JSON API
+```
+
+**Auth path (login / logout / “fix my session” in feature code):**
+
+```txt
+                    Auth Session Facade  (setSession / clearSession / bootstrap)
+                                      │
+                         ┌────────────┴────────────┐
+                         ▼                         ▼
+                   tokenStore                 HttpOnly cookies
+              (Bearer + refresh locally)   (Edge proxy gate on navigation)
+```
+
+**Auth path (automatic token refresh on 401/403):** handled **inside** `src/lib/api/` (interceptor + `performTokenRefresh`), not through the facade — details in [auth-system.md](./auth-system.md).
 
 ---
 
@@ -114,6 +138,7 @@ Local scripts: `lint`, `typecheck`, `build`, `format`, `format:check`. There is 
 | -------------------------------- | ---------------------------------------------------------------------------- |
 | Onboarding + new feature steps   | [getting-started.md](./getting-started.md)                                   |
 | Feature module blueprint         | [feature-blueprint.md](./feature-blueprint.md)                               |
+| Auth, session facade, RBAC      | [auth-system.md](./auth-system.md)                                           |
 | Scope of the template            | [project-context.md](./project-context.md)                                   |
 | Environment variables            | [env-configuration.md](./env-configuration.md)                               |
 | Locales and dictionaries         | [internationalization.md](./internationalization.md)                         |
@@ -124,4 +149,6 @@ Local scripts: `lint`, `typecheck`, `build`, `format`, `format:check`. There is 
 | Toast UX                         | [toast-system.md](./toast-system.md)                                         |
 | Husky, lint-staged, commits      | [git-hooks-and-commit-conventions.md](./git-hooks-and-commit-conventions.md) |
 | Common issues                    | [troubleshooting.md](./troubleshooting.md)                                   |
-| Doc index                        | [README.md](./README.md)                                                     |
+| Doc index + learning path        | [README.md](./README.md)                                                     |
+
+**Core stack:** [Documentation index](./README.md) · [API layer](./api-layer.md) · [Auth](./auth-system.md)

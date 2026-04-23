@@ -1,3 +1,8 @@
+/**
+ * Axios instance factory: auth headers, optional cart/locale headers, **single-flight refresh** on 401/403,
+ * one **network** retry, **412** session handling, and rejection with **`ApiError`** / **`AuthError`** (never raw `AxiosError` for HTTP errors).
+ * No toasts here — `src/lib/react-query/query-client.ts` and `docs/api-error-handling.md`.
+ */
 import axios, {
   AxiosError,
   isCancel,

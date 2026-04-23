@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { encodeAccessToken, encodeRefreshToken } from "@/app/api/auth/_payload";
+import type { AuthUser } from "@/features/auth/types/auth.types";
 
 export const runtime = "nodejs";
 
@@ -22,18 +24,19 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: "Invalid email or password" }, { status: 401 });
   }
 
-  const user = {
+  const user: AuthUser = {
     id: 1,
     email: DEMO_EMAIL,
     name: "Demo User",
+    role: "admin",
   };
 
-  const payload = JSON.stringify({ user });
-  const accessToken = `demo.${Buffer.from(payload, "utf8").toString("base64url")}`;
+  const accessToken = encodeAccessToken(user);
+  const refreshToken = encodeRefreshToken({ sub: user.id, role: user.role, v: 1 });
 
   return NextResponse.json({
     accessToken,
-    refreshToken: null,
+    refreshToken,
     user,
   });
 }

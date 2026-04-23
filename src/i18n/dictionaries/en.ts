@@ -105,6 +105,12 @@ const en = {
     profileTitle: "Your profile",
     profileIntro: "This route is protected on the client. Tokens persist in localStorage via the existing token store.",
     profileEmail: "Signed in as",
+    adminBadge: "Admin",
+    adminBadgeTitle: "Administrator role (RBAC demo)",
+    navDashboard: "Dashboard",
+    dashboardTitle: "Admin dashboard",
+    dashboardIntro: "This page is wrapped with RequireRole role=\"admin\". Non-admins see a forbidden message.",
+    forbiddenRole: "You do not have permission to view this page.",
   },
 };
 
