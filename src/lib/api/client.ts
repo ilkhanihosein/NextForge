@@ -1,5 +1,6 @@
 import axios, {
   AxiosError,
+  isCancel,
   type AxiosInstance,
   type AxiosResponse,
   type InternalAxiosRequestConfig,
@@ -113,6 +114,10 @@ export const createApiClient = (config: ApiClientConfig): AxiosInstance => {
   client.interceptors.response.use(
     (res: AxiosResponse) => res,
     async (error: AxiosError) => {
+      if (isCancel(error)) {
+        return Promise.reject(error);
+      }
+
       const httpResponse = error.response;
       const originalRequest = error.config as InternalConfig | undefined;
 
