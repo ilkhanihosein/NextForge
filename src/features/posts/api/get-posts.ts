@@ -1,20 +1,22 @@
-import { useQuery } from "@tanstack/react-query";
-import { apiClient } from "@/lib/http/api-client";
+/**
+ * Uses `postsQueryPrefix` so `invalidateQueries({ queryKey: [...postsQueryPrefix] })` matches this query
+ * and descriptor-backed keys. For a minimal `http.get` example without prefixes, see `docs/api-layer.md`.
+ */
+import { queryOptions, useQuery } from "@tanstack/react-query";
+import { http } from "@/lib/api/http";
+import { postsQueryPrefix } from "@/lib/api/query-keys";
+import type { Post } from "@/features/posts/api/posts.service";
 
-export type Post = {
-  id: number;
-  title: string;
-  body: string;
-};
-
-const getPosts = async (): Promise<Post[]> => {
-  const response = await apiClient.get<Post[]>("/posts?_limit=3");
-  return response.data;
-};
+export const postsQueryOptions = (limit: number) =>
+  queryOptions({
+    queryKey: [...postsQueryPrefix, { _limit: limit }] as const,
+    queryFn: ({ signal }) =>
+      http.get<Post[]>("/posts", {
+        signal,
+        params: { _limit: limit },
+      }),
+  });
 
 export const usePostsQuery = () => {
-  return useQuery({
-    queryKey: ["posts", "list"],
-    queryFn: getPosts,
-  });
+  return useQuery(postsQueryOptions(3));
 };

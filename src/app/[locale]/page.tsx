@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PostsPreview } from "@/components/home/posts-preview";
+import { UsersPreview } from "@/components/home/users-preview";
 import { ToastShowcase } from "@/components/home/toast-showcase";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
@@ -70,13 +71,21 @@ export default async function LocaleHomePage({ params }: LocalePageProps) {
             <li>`store/` - zustand stores</li>
             <li>`i18n/` - typed dictionaries</li>
             <li>`config/` - constants and settings</li>
+            <li>`features/[domain]/api/` — service + queries per domain module</li>
           </ul>
 
           <div className="mt-5">
             <p className="mb-2 text-xs uppercase tracking-wider text-muted-foreground">
-              Axios + React Query sample
+              Module: posts (`features/posts`)
             </p>
             <PostsPreview />
+          </div>
+
+          <div className="mt-5">
+            <p className="mb-2 text-xs uppercase tracking-wider text-muted-foreground">
+              Module: users (`features/users`)
+            </p>
+            <UsersPreview />
           </div>
 
           <ToastShowcase />

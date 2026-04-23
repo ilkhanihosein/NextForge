@@ -5,6 +5,10 @@ Designed for teams that want a clean architecture, fast onboarding, and scalable
 
 Keywords: **next.js starter**, **multilingual next.js**, **app router boilerplate**, **tailwind css template**, **dark mode next.js**, **react query axios setup**.
 
+## Documentation
+
+In-depth architecture, env, i18n, API layer, React Query, theming, toasts, and git hooks: **[`docs/README.md`](./docs/README.md)** (start with [`docs/architecture.md`](./docs/architecture.md)). **API:** start simple with `http.get`, scale to descriptors when you need them — [`docs/api-layer.md`](./docs/api-layer.md).
+
 ## Why This Starter
 
 - Build multilingual products fast with localized routing (`en`, `fa`).
