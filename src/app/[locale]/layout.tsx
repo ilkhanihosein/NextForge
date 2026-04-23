@@ -37,13 +37,17 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
   const typedLocale = locale as Locale;
   const dictionary = getDictionary(typedLocale);
   const direction = getDirection(typedLocale);
+  const localeFontClass = typedLocale === "fa" ? "locale-fa" : "";
 
   return (
     <AppProviders locale={typedLocale} dictionary={dictionary}>
       <Suspense fallback={null}>
         <NavigationProgress />
       </Suspense>
-      <main dir={direction} className="mx-auto min-h-screen w-full max-w-7xl px-4">
+      <main
+        dir={direction}
+        className={`mx-auto min-h-screen w-full max-w-7xl px-4 ${localeFontClass}`}
+      >
         {children}
       </main>
     </AppProviders>

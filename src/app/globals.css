@@ -47,6 +47,11 @@ body {
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }
 
+.locale-fa {
+  font-family: var(--font-baloo-bhaijaan-2), var(--font-geist-sans), Arial, Helvetica,
+    sans-serif;
+}
+
 #nprogress {
   pointer-events: none;
 }
