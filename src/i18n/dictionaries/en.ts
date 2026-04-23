@@ -87,6 +87,24 @@ const en = {
     footerNote: "Clone, set `NEXT_PUBLIC_API_BASE_URL`, and ship.",
     footerDocs: "External docs",
     trySamples: "Jump to live samples",
+    uiShowcase: {
+      title: "UI primitives",
+      subtitle:
+        "Small building blocks from `components/ui` — variants and states only; no API or validation logic here.",
+      buttons: "Buttons",
+      text: "Typography",
+      inputs: "Inputs",
+      composed: "Composed",
+      sampleError: "This is display-only error text.",
+      emailPlaceholder: "you@example.com",
+      searchPlaceholder: "Search…",
+      passwordLabel: "Password",
+      emailLabel: "Email",
+      headingSample: "Heading sample",
+      bodySample: "Body copy — short line for layout reference in both locales.",
+      captionSample: "Caption / helper style",
+      loadingDemoButton: "Loading demo (2s)",
+    },
   },
   auth: {
     navLogin: "Log in",
@@ -103,13 +121,15 @@ const en = {
     submittingLabel: "Signing in…",
     redirecting: "Redirecting…",
     profileTitle: "Your profile",
-    profileIntro: "This route is protected on the client. Tokens persist in localStorage via the existing token store.",
+    profileIntro:
+      "This route is protected on the client. Tokens persist in localStorage via the existing token store.",
     profileEmail: "Signed in as",
     adminBadge: "Admin",
     adminBadgeTitle: "Administrator role (RBAC demo)",
     navDashboard: "Dashboard",
     dashboardTitle: "Admin dashboard",
-    dashboardIntro: "This page is wrapped with RequireRole role=\"admin\". Non-admins see a forbidden message.",
+    dashboardIntro:
+      'This page is wrapped with RequireRole role="admin". Non-admins see a forbidden message.',
     forbiddenRole: "You do not have permission to view this page.",
   },
 };

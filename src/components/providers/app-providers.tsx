@@ -7,6 +7,7 @@ import { AuthSessionBootstrap } from "@/features/auth/ui/auth-session-bootstrap"
 import { QueryProvider } from "@/components/providers/query-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { ToastProvider } from "@/components/providers/toast-provider";
+import { GlobalLoadingOverlay } from "@/components/ui/global-loading-overlay";
 
 type AppProvidersProps = {
   children: React.ReactNode;
@@ -22,6 +23,7 @@ export const AppProviders = ({ children, locale, dictionary }: AppProvidersProps
           <AuthSessionBootstrap />
           {children}
           <ToastProvider />
+          <GlobalLoadingOverlay />
         </AppContextProvider>
       </QueryProvider>
     </ThemeProvider>

@@ -2,7 +2,9 @@ import Link from "next/link";
 import { PostsPreview } from "@/components/home/posts-preview";
 import { StarterStackCards } from "@/components/home/starter-stack-cards";
 import { UsersPreview } from "@/components/home/users-preview";
+import { GlobalLoadingDevToggle } from "@/components/home/global-loading-dev-toggle";
 import { ToastShowcase } from "@/components/home/toast-showcase";
+import { UiPrimitivesShowcase } from "@/components/home/ui-primitives-showcase";
 import type { Locale } from "@/config/site";
 import type { Dictionary } from "@/i18n/get-dictionary";
 
@@ -54,6 +56,8 @@ export function FeaturePlayground({ locale, dictionary }: FeaturePlaygroundProps
         </div>
 
         <div className="grid gap-6 lg:grid-cols-2">
+          <UiPrimitivesShowcase labels={h.uiShowcase} />
+
           <article className="flex flex-col rounded-2xl border border-border/70 bg-background/80 p-5 shadow-soft">
             <div className="flex flex-wrap items-start justify-between gap-2">
               <div>
@@ -114,6 +118,12 @@ export function FeaturePlayground({ locale, dictionary }: FeaturePlaygroundProps
               <ToastShowcase />
             </div>
           </article>
+
+          {process.env.NODE_ENV === "development" ? (
+            <article className="rounded-2xl border border-border/70 bg-background/80 p-5 shadow-soft lg:col-span-2">
+              <GlobalLoadingDevToggle />
+            </article>
+          ) : null}
         </div>
       </div>
     </section>
