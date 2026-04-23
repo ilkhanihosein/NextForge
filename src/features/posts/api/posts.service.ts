@@ -1,10 +1,5 @@
 import { api } from "@/lib/api/http";
-
-export type Post = {
-  id: number;
-  title: string;
-  body: string;
-};
+import type { Post } from "@/features/posts/types/post.types";
 
 /** Unauthenticated list reads: no Bearer header, no refresh retry on 401/403. */
 export const postsListRequestOptions = { secure: false, skipAuthRefresh: true } as const;
