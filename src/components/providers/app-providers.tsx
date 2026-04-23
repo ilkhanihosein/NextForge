@@ -5,6 +5,7 @@ import type { Locale } from "@/config/site";
 import type { Dictionary } from "@/i18n/get-dictionary";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { ToastProvider } from "@/components/providers/toast-provider";
 
 type AppProvidersProps = {
   children: React.ReactNode;
@@ -18,6 +19,7 @@ export const AppProviders = ({ children, locale, dictionary }: AppProvidersProps
       <QueryProvider>
         <AppContextProvider locale={locale} dictionary={dictionary}>
           {children}
+          <ToastProvider />
         </AppContextProvider>
       </QueryProvider>
     </ThemeProvider>

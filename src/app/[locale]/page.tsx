@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PostsPreview } from "@/components/home/posts-preview";
+import { ToastShowcase } from "@/components/home/toast-showcase";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { siteConfig, type Locale } from "@/config/site";
@@ -77,6 +78,8 @@ export default async function LocaleHomePage({ params }: LocalePageProps) {
             </p>
             <PostsPreview />
           </div>
+
+          <ToastShowcase />
         </div>
       </div>
     </section>
