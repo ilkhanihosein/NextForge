@@ -2,6 +2,8 @@
 
 > **Start simple with `http.get`, scale to request descriptors (`api.*`) when your app grows.** Details: [api-layer.md](./api-layer.md).
 
+**Onboarding:** [getting-started.md](./getting-started.md) · **Feature layout:** [feature-blueprint.md](./feature-blueprint.md)
+
 ---
 
 ## Quick start
@@ -88,9 +90,9 @@ Keep **`queryFn`** thin. Prefer **`http.*`** by default; use **`descriptor.fetch
 
 ## Related documents
 
-| Topic | Document |
-| ----- | -------- |
-| HTTP client | [api-layer.md](./api-layer.md) |
+| Topic           | Document                                         |
+| --------------- | ------------------------------------------------ |
+| HTTP client     | [api-layer.md](./api-layer.md)                   |
 | Errors + toasts | [api-error-handling.md](./api-error-handling.md) |
-| Toasts | [toast-system.md](./toast-system.md) |
-| Architecture | [architecture.md](./architecture.md) |
+| Toasts          | [toast-system.md](./toast-system.md)             |
+| Architecture    | [architecture.md](./architecture.md)             |

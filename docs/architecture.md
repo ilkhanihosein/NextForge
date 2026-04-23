@@ -13,7 +13,7 @@ Typical first steps when starting a **new** product from this repo:
 1. **Identity:** update `name`, `description`, and `version` in `package.json`; point `git remote` at your repository.
 2. **Environment:** copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_API_BASE_URL` (and any future secrets). Consider adding a Zod-validated `src/config/env.ts` so `process.env` is not scattered.
 3. **Locales:** edit `src/config/site.ts` (`locales`, `defaultLocale`, `rtlLocales`) and add dictionary files under `src/i18n/dictionaries/`.
-4. **Features:** add `src/features/<your-feature>/` (API services, hooks, components). Remove or replace the sample **`posts`** / **`users`** modules when unused.
+4. **Features:** add `src/features/<your-feature>/` using the same **`api/` · `hooks/` · `ui/` · `types/`** layout as **`posts`** and **`users`** (see [feature-blueprint.md](./feature-blueprint.md)). Remove or replace the sample modules when unused.
 5. **API layer:** extend `src/lib/api/` (token refresh implementation, extra clients, headers). Wire real auth in `src/lib/api/http.ts`.
 6. **Theming:** adjust semantic tokens and surfaces in `src/app/globals.css`; keep Tailwind `@theme inline` in sync if you add new `--color-*` mappings.
 7. **Routing:** keep `src/proxy.ts` aligned with `siteConfig.locales` if you add locales (Next 16 uses the `proxy` convention for edge redirects).
@@ -41,18 +41,20 @@ Nothing under `src/features/` is required for the **framework** of layouts, i18n
 
 ### Feature modules (`src/features/<feature>/`)
 
-- **Role:** Bounded context for a product area: e.g. `features/posts/api/` or `features/users/api/` for services + React Query hooks/options.
-- **Pattern:** `*.service.ts` for pure HTTP calls via `http` from `@/lib/api`; `get-*.ts` or `*.queries.ts` for `queryOptions` + `useQuery` exports; optional `index.ts` barrel (see `features/users`).
+- **Role:** Bounded context for a product area (e.g. **posts**, **users**): HTTP + cache keys + hooks + UI for that domain only.
+- **Pattern:** `types/` for domain types; `api/get-*.ts` for **`http`** + **`queryOptions`**; optional `*.service.ts` for shared **`requestOptions`** and an **advanced** `api.get` descriptor; `hooks/` for thin **`useQuery`** / **`useMutation`** wrappers; `ui/` for components that consume hooks only; **`index.ts`** barrel. **Canonical spec:** [feature-blueprint.md](./feature-blueprint.md).
+
+**Consistency:** all shipped features use the **same folder contract** so the repo scales like a small **framework** — predictable reviews, copy-paste growth, aligned invalidation. **Posts** and **Users** are twin references; diverge only when you have a documented reason.
 
 ### Shared infrastructure
 
-| Area                        | Location                       | Responsibility                                                                                                            |
-| --------------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
-| HTTP client, errors, tokens | `src/lib/api/`                 | Axios instance, interceptors, typed helpers, query key factories                                                          |
-| Legacy re-export            | `src/lib/http/api-client.ts`   | Re-exports `apiClient` from `@/lib/api/http` for older imports                                                            |
+| Area                        | Location                       | Responsibility                                                                                                                                                                            |
+| --------------------------- | ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| HTTP client, errors, tokens | `src/lib/api/`                 | Axios instance, interceptors, typed helpers, query key factories                                                                                                                          |
+| Legacy re-export            | `src/lib/http/api-client.ts`   | Re-exports `apiClient` from `@/lib/api/http` for older imports                                                                                                                            |
 | React Query                 | `src/lib/react-query/`         | `QueryClient` defaults, global error → toast, typed `meta` (see [data-fetching-and-react-query.md](./data-fetching-and-react-query.md), [api-error-handling.md](./api-error-handling.md)) |
-| Utilities                   | `src/lib/utils.ts`             | `cn()` for class merging                                                                                                  |
-| Toasts                      | `src/lib/toast.tsx`, providers | App-level notifications (see [toast-system.md](./toast-system.md))                                                        |
+| Utilities                   | `src/lib/utils.ts`             | `cn()` for class merging                                                                                                                                                                  |
+| Toasts                      | `src/lib/toast.tsx`, providers | App-level notifications (see [toast-system.md](./toast-system.md))                                                                                                                        |
 
 ### Presentation (`src/components/`)
 
@@ -77,10 +79,13 @@ Nothing under `src/features/` is required for the **framework** of layouts, i18n
 
 ## Request lifecycle (browser → API)
 
-**Mental model:** **Component** → **React Query** (`queryFn` / `mutationFn`) → **`http`** (default) **or** **`api`** (advanced descriptors) → **Axios** (`apiClient`, interceptors) → your **API**.
+**Mental model:** **UI (components)** → **hooks** (`useQuery` / `useMutation` from feature `hooks/`) → **React Query** (cache, dedupe, retries) → **`queryFn`** inside shared **`queryOptions`** (`api/`) → **`http`** (default) **or** **`api`** (advanced descriptors) → **Axios** (`apiClient`, interceptors) → your **API**.
 
-1. User action or mount triggers a **React Query** `queryFn` / `mutationFn`.
-2. **`queryFn`** usually calls **`http.get` / `http.post`** from `@/lib/api` (pass **`signal`** from React Query when you need cancellation). Use **`api.get`** / descriptors only when an advanced flow benefits from **`{ fetch, cancel, queryKey }`** in one object ([api-layer.md](./api-layer.md)).
+- **`http`** — default: call **`http.get` / `http.post`** (etc.) from `queryFn`; pass **`signal`** for cancellation.
+- **`api`** — optional descriptors when **`{ fetch, cancel, queryKey }`** in one object is worth the indirection ([api-layer.md](./api-layer.md)).
+
+1. User action or mount triggers a **feature hook**, which calls **`useQuery`** / **`useMutation`** with options from **`api/`** (typically **`queryOptions({ queryKey, queryFn })`**).
+2. **`queryFn`** calls **`http.get` / `http.post`** (etc.) from `@/lib/api`, passing **`signal`** when you want cancellation tied to the query lifecycle.
 3. **Axios** `apiClient` applies request interceptors (e.g. `Authorization`, `x-request-id`).
 4. On **401**, optional refresh queue runs (placeholder in `http.ts` until you implement real refresh).
 5. Errors normalize to **`ApiError`** / **`AuthError`**; Query/Mutation caches can surface **final** toasts (not per silent retry — see [api-error-handling.md](./api-error-handling.md)).
@@ -107,6 +112,8 @@ Local scripts: `lint`, `typecheck`, `build`, `format`, `format:check`. There is 
 
 | Topic                            | Document                                                                     |
 | -------------------------------- | ---------------------------------------------------------------------------- |
+| Onboarding + new feature steps   | [getting-started.md](./getting-started.md)                                   |
+| Feature module blueprint         | [feature-blueprint.md](./feature-blueprint.md)                               |
 | Scope of the template            | [project-context.md](./project-context.md)                                   |
 | Environment variables            | [env-configuration.md](./env-configuration.md)                               |
 | Locales and dictionaries         | [internationalization.md](./internationalization.md)                         |
