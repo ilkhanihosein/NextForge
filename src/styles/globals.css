@@ -1,0 +1,331 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/*
+ * Design tokens — three layers:
+ *   1. Primitives  (@theme)          raw palette scales, never used for meaning
+ *   2. Semantics   (:root / .dark)   what a color *does*: background, primary, border…
+ *   3. Utilities   (@theme inline)   semantic tokens exposed to Tailwind (bg-primary…)
+ * To re-brand, change the primitive scales and the semantic mapping; components only
+ * ever reference layer 2/3, so nothing else needs to move.
+ */
+
+/* `.light` / `.dark` can also scope a subtree (used by the design-system previews). */
+@custom-variant dark (&:where(.dark, .dark *):not(:where(.light, .light *)));
+
+/* `static`: emit every primitive even if no utility uses it (design system, emails, JS). */
+@theme static {
+  /* Oat Silk — anchor #E2D8CB (300) */
+  --color-oat-50: #fbf8f3;
+  --color-oat-100: #f5f0e8;
+  --color-oat-200: #ede5da;
+  --color-oat-300: #e2d8cb;
+  --color-oat-400: #cfc1af;
+  --color-oat-500: #b5a48f;
+  --color-oat-600: #978672;
+  --color-oat-700: #776959;
+  --color-oat-800: #594e42;
+  --color-oat-900: #3b342c;
+  --color-oat-950: #221e19;
+
+  /* Mulberry Kiss — anchor #56061D (800) */
+  --color-mulberry-50: #fcf2f4;
+  --color-mulberry-100: #f8e3e8;
+  --color-mulberry-200: #f0c4ce;
+  --color-mulberry-300: #e397a8;
+  --color-mulberry-400: #cf6481;
+  --color-mulberry-500: #b23a5b;
+  --color-mulberry-600: #93203f;
+  --color-mulberry-700: #74112d;
+  --color-mulberry-800: #56061d;
+  --color-mulberry-900: #3d0414;
+  --color-mulberry-950: #26020c;
+
+  /* Blue Reverie — anchor #507593 (500) */
+  --color-reverie-50: #eef4f9;
+  --color-reverie-100: #dde8f1;
+  --color-reverie-200: #c2d5e5;
+  --color-reverie-300: #a0bcd3;
+  --color-reverie-400: #7b9db8;
+  --color-reverie-500: #507593;
+  --color-reverie-600: #42627c;
+  --color-reverie-700: #354f65;
+  --color-reverie-800: #283d4f;
+  --color-reverie-900: #1b2b39;
+  --color-reverie-950: #0f1a24;
+
+  /* Midnight Custard — anchor #022E4A (800) */
+  --color-midnight-50: #eaf2f8;
+  --color-midnight-100: #d3e3ef;
+  --color-midnight-200: #a9c6dc;
+  --color-midnight-300: #7ba4c3;
+  --color-midnight-400: #4c7fa6;
+  --color-midnight-500: #245f8a;
+  --color-midnight-600: #0e4a73;
+  --color-midnight-700: #053c5f;
+  --color-midnight-800: #022e4a;
+  --color-midnight-900: #01233a;
+  --color-midnight-950: #011726;
+
+  --radius-xs: 0.375rem;
+  --radius-sm: 0.625rem;
+  --radius-md: 0.875rem;
+  --radius-lg: 1.25rem;
+  --radius-xl: 1.75rem;
+  --radius-2xl: 2.25rem;
+
+  --ease-luxe: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-rise: rise 0.9s var(--ease-luxe) both;
+  --animate-fade: fade 0.6s ease both;
+  --animate-float: float 14s ease-in-out infinite;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+      filter: blur(6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+      filter: none;
+    }
+  }
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(3%, -4%, 0) scale(1.06);
+    }
+  }
+}
+
+:root,
+.light {
+  color-scheme: light;
+
+  /* next/font injects --font-manrope / --font-fraunces / --font-vazirmatn on <html>. */
+  --font-body: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-fraunces), ui-serif, Georgia, serif;
+
+  --background: var(--color-oat-50);
+  --background-deep: var(--color-oat-100);
+  --foreground: var(--color-midnight-800);
+  --muted: var(--color-oat-200);
+  --muted-foreground: var(--color-reverie-700);
+
+  --primary: var(--color-mulberry-800);
+  --primary-hover: var(--color-mulberry-700);
+  --primary-foreground: var(--color-oat-50);
+  --secondary: var(--color-reverie-500);
+  --secondary-foreground: #ffffff;
+  --accent: var(--color-oat-300);
+  --accent-foreground: var(--color-midnight-800);
+  /* Brand ink: headings accents, links, focus — always readable on --background. */
+  --brand: var(--color-mulberry-800);
+
+  --border: color-mix(in oklab, var(--color-midnight-800) 12%, transparent);
+  --border-strong: color-mix(in oklab, var(--color-midnight-800) 22%, transparent);
+  --input: color-mix(in oklab, #ffffff 70%, transparent);
+  --ring: var(--color-mulberry-500);
+
+  --success: #1f7a4d;
+  --warning: #9a5b00;
+  --danger: #b4232f;
+  --info: var(--color-reverie-600);
+
+  /* Glass */
+  --glass: color-mix(in oklab, #ffffff 55%, transparent);
+  --glass-strong: color-mix(in oklab, #ffffff 78%, transparent);
+  --glass-border: color-mix(in oklab, #ffffff 75%, transparent);
+  --glass-edge: color-mix(in oklab, var(--color-midnight-800) 8%, transparent);
+  --glass-highlight: color-mix(in oklab, #ffffff 90%, transparent);
+  --glass-shadow:
+    0 1px 0 0 var(--glass-highlight) inset,
+    0 24px 60px -30px color-mix(in oklab, var(--color-midnight-800) 35%, transparent);
+
+  --aurora-1: color-mix(in oklab, var(--color-mulberry-300) 55%, transparent);
+  --aurora-2: color-mix(in oklab, var(--color-reverie-300) 60%, transparent);
+  --aurora-3: color-mix(in oklab, var(--color-oat-300) 90%, transparent);
+}
+
+.dark {
+  color-scheme: dark;
+
+  --background: var(--color-midnight-950);
+  --background-deep: #010f1a;
+  --foreground: var(--color-oat-100);
+  --muted: color-mix(in oklab, var(--color-midnight-800) 70%, transparent);
+  --muted-foreground: var(--color-reverie-300);
+
+  /* On navy, a cream button reads as the luxury action; mulberry becomes the accent ink. */
+  --primary: var(--color-oat-300);
+  --primary-hover: var(--color-oat-200);
+  --primary-foreground: var(--color-mulberry-800);
+  --secondary: var(--color-reverie-500);
+  --secondary-foreground: #ffffff;
+  --accent: var(--color-midnight-800);
+  --accent-foreground: var(--color-oat-100);
+  --brand: var(--color-mulberry-300);
+
+  --border: color-mix(in oklab, var(--color-oat-300) 12%, transparent);
+  --border-strong: color-mix(in oklab, var(--color-oat-300) 22%, transparent);
+  --input: color-mix(in oklab, var(--color-midnight-800) 55%, transparent);
+  --ring: var(--color-mulberry-300);
+
+  --success: #5fd39a;
+  --warning: #f2b55a;
+  --danger: #ff8a93;
+  --info: var(--color-reverie-300);
+
+  --glass: color-mix(in oklab, var(--color-midnight-800) 38%, transparent);
+  --glass-strong: color-mix(in oklab, var(--color-midnight-900) 78%, transparent);
+  --glass-border: color-mix(in oklab, var(--color-oat-300) 14%, transparent);
+  --glass-edge: color-mix(in oklab, #000000 30%, transparent);
+  --glass-highlight: color-mix(in oklab, var(--color-oat-100) 10%, transparent);
+  --glass-shadow:
+    0 1px 0 0 var(--glass-highlight) inset,
+    0 30px 70px -30px color-mix(in oklab, #000000 75%, transparent);
+
+  --aurora-1: color-mix(in oklab, var(--color-mulberry-700) 70%, transparent);
+  --aurora-2: color-mix(in oklab, var(--color-reverie-700) 70%, transparent);
+  --aurora-3: color-mix(in oklab, var(--color-midnight-600) 60%, transparent);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-background-deep: var(--background-deep);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-brand: var(--brand);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-info: var(--info);
+  --color-glass: var(--glass);
+  --color-glass-strong: var(--glass-strong);
+  --color-glass-border: var(--glass-border);
+
+  --font-sans: var(--font-body);
+  --font-display: var(--font-heading);
+  --shadow-glass: var(--glass-shadow);
+}
+
+/* Persian: one family for body and display so the script stays consistent. */
+:lang(fa) {
+  --font-body: var(--font-vazirmatn), var(--font-manrope), system-ui, sans-serif;
+  --font-heading: var(--font-vazirmatn), var(--font-fraunces), serif;
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    background: color-mix(in oklab, var(--color-mulberry-500) 30%, transparent);
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+}
+
+/* Frosted surface. `glass-strong` for overlays that sit on busy content. */
+@utility glass {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+}
+@utility glass-strong {
+  background: var(--glass-strong);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(28px) saturate(170%);
+  -webkit-backdrop-filter: blur(28px) saturate(170%);
+}
+@utility text-gradient {
+  background: linear-gradient(
+    120deg,
+    var(--brand) 0%,
+    var(--color-reverie-500) 55%,
+    var(--foreground) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Film grain, layered over the aurora so gradients never band. */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Sonner toasts inherit the glass language. */
+[data-sonner-toaster] [data-sonner-toast] {
+  --normal-bg: var(--glass-strong);
+  --normal-text: var(--foreground);
+  --normal-border: var(--glass-border);
+  backdrop-filter: blur(24px) saturate(160%);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+}

@@ -1,0 +1,189 @@
+{
+  "metadata": {
+    "title": "NextForge — full-stack Next.js foundation",
+    "description": "Feature-based Next.js starter with i18n, invite-only auth, Postgres, email and object storage."
+  },
+  "common": {
+    "home": "Home",
+    "mainNav": "Main navigation",
+    "rights": "All rights reserved.",
+    "close": "Close",
+    "cancel": "Cancel",
+    "save": "Save",
+    "switchLanguage": "Change language",
+    "languages": { "en": "English", "fa": "فارسی" },
+    "theme": { "label": "Theme", "light": "Light", "dark": "Dark", "system": "System" }
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The page you’re looking for has moved or never existed.",
+    "back": "Back to home"
+  },
+  "home": {
+    "eyebrow": "NextForge v2",
+    "title": "Start every product from a finished foundation",
+    "description": "Feature-based architecture, invite-only auth, Postgres, email and storage — wired, typed and secure by default.",
+    "primaryCta": "Explore the design system",
+    "secondaryCta": "Sign in",
+    "features": {
+      "i18n": {
+        "title": "Multilingual by default",
+        "body": "next-intl with an unprefixed default locale, RTL support and hreflang alternates."
+      },
+      "auth": {
+        "title": "Invite-only auth",
+        "body": "Better Auth with roles, rate limits, password reset and admin-issued invitations."
+      },
+      "db": {
+        "title": "Postgres, zero setup",
+        "body": "Drizzle ORM on embedded PGlite locally, any hosted Postgres (Neon) in production."
+      },
+      "email": {
+        "title": "Transactional email",
+        "body": "React Email templates sent via Resend, printed to the console in development."
+      },
+      "storage": {
+        "title": "Private object storage",
+        "body": "Presigned uploads and downloads on Cloudflare R2 or any S3, with a local driver for dev."
+      },
+      "design": {
+        "title": "Glass design system",
+        "body": "Layered tokens, light and dark themes and accessible primitives."
+      }
+    }
+  },
+  "designSystem": {
+    "eyebrow": "Foundations",
+    "title": "Design system",
+    "description": "Primitive palette, semantic tokens and core components. Values are read live from CSS, so this page always matches the code.",
+    "palette": "Palette",
+    "semantic": "Semantic tokens",
+    "semanticHint": "Toggle the theme in the header: these swatches re-map, the primitives above don’t.",
+    "typography": "Typography",
+    "components": "Components in both themes"
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Password",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "forgotPassword": "Forgot password?",
+    "signIn": "Sign in",
+    "signOut": "Sign out",
+    "admin": "Admin",
+    "account": "Account",
+    "welcomeBack": "Welcome back",
+    "signInTitle": "Sign in",
+    "signInDescription": "Accounts are by invitation. Use the email your invitation was sent to.",
+    "forgotTitle": "Reset your password",
+    "forgotDescription": "Enter your email and we’ll send you a secure link to choose a new password.",
+    "sendResetLink": "Send reset link",
+    "resetSent": "If an account exists for that email, a reset link is on its way. It expires in one hour.",
+    "resetTitle": "Choose a new password",
+    "resetDescription": "Pick something long and memorable. You’ll be signed out everywhere else.",
+    "resetDone": "Your password has been updated. You can sign in now.",
+    "requestNewLink": "Request a new link",
+    "backToLogin": "Back to sign in",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm password",
+    "currentPassword": "Current password",
+    "passwordHint": "At least {min} characters.",
+    "savePassword": "Save password",
+    "passwordChanged": "Password updated. Other devices have been signed out.",
+    "inviteTitle": "Invitation",
+    "inviteEyebrow": "You’re invited",
+    "inviteHello": "Welcome, {name}",
+    "inviteDescription": "Set a password for {email} to activate your account.",
+    "activateAccount": "Activate account",
+    "errors": {
+      "invalidCredentials": "That email and password don’t match.",
+      "tooManyAttempts": "Too many attempts. Please wait a minute and try again.",
+      "banned": "This account has been suspended. Please contact the administrator.",
+      "passwordTooShort": "Use at least {min} characters.",
+      "passwordTooLong": "That password is too long.",
+      "passwordMismatch": "The passwords don’t match.",
+      "resetInvalid": "This reset link is invalid or has expired.",
+      "inviteInvalid": "This invitation link is invalid, expired or already used. Ask for a new one.",
+      "currentPasswordWrong": "Your current password is incorrect.",
+      "validation": "Please check the highlighted fields."
+    }
+  },
+  "account": {
+    "eyebrow": "Your account",
+    "title": "Account",
+    "passwordTitle": "Password",
+    "passwordDescription": "Changing it signs you out on every other device."
+  },
+  "admin": {
+    "nav": { "label": "Admin", "dashboard": "Overview", "users": "Users" },
+    "dashboard": {
+      "eyebrow": "Admin",
+      "title": "Good to see you, {name}",
+      "description": "A quick look at what’s happening.",
+      "stats": { "users": "Total users", "members": "Members", "admins": "Admins" }
+    },
+    "users": {
+      "eyebrow": "People",
+      "title": "Users",
+      "description": "{count, plural, =0 {No users yet} one {# user} other {# users}}. Accounts are created by invitation only.",
+      "searchPlaceholder": "Search name or email",
+      "invite": "Invite user",
+      "inviteTitle": "Invite a user",
+      "inviteDescription": "They’ll get an email with a link to set their password. The link is valid for 7 days.",
+      "sendInvite": "Send invitation",
+      "resendInvite": "Resend invitation",
+      "suspend": "Suspend",
+      "reactivate": "Reactivate",
+      "delete": "Delete",
+      "confirmDelete": "Delete {name}? This can’t be undone.",
+      "you": "You",
+      "fields": {
+        "name": "Name",
+        "email": "Email",
+        "role": "Role",
+        "emailLanguage": "Email language",
+        "status": "Status",
+        "joined": "Added",
+        "actions": "Actions"
+      },
+      "roles": { "admin": "Admin", "member": "Member" },
+      "status": { "active": "Active", "invited": "Invited", "suspended": "Suspended" },
+      "empty": {
+        "title": "No users found",
+        "description": "Invite someone to get started."
+      },
+      "toast": {
+        "invited": "Invitation sent.",
+        "inviteResent": "A fresh invitation is on its way.",
+        "roleUpdated": "Role updated.",
+        "suspended": "User suspended and signed out.",
+        "reactivated": "User reactivated.",
+        "deleted": "User deleted."
+      },
+      "errors": {
+        "generic": "Something went wrong. Please try again.",
+        "validation": "Please check the highlighted fields.",
+        "invalidField": "Please check this field.",
+        "emailTaken": "A user with this email already exists.",
+        "notFound": "User not found.",
+        "cannotModifySelf": "You can’t change your own account here."
+      }
+    }
+  },
+  "emails": {
+    "invitation": {
+      "preview": "Your invitation to {brand}",
+      "heading": "Hello {name},",
+      "body": "You’ve been invited to {brand}. Choose a password to activate your account.",
+      "action": "Set my password",
+      "footer": "This link is valid for 7 days and can be used once. If you weren’t expecting this, you can ignore this email."
+    },
+    "resetPassword": {
+      "preview": "Reset your password",
+      "heading": "Hello {name},",
+      "body": "We received a request to reset your password. Use the button below to choose a new one.",
+      "action": "Reset password",
+      "footer": "This link expires in one hour. If you didn’t ask for it, no action is needed."
+    }
+  }
+}

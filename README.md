@@ -1,176 +1,78 @@
-# Next.js Multilingual Starter
+# NextForge v2
 
-**Production-ready, adoptable starter** for real products: **Next.js 16**, **TypeScript**, **App Router**, **Tailwind CSS v4**, typed **i18n**, **TanStack Query** + **Axios**, and a **feature-first** layout that stays predictable as the app grows.
+A **full-stack Next.js foundation** for shipping real products fast: feature-based architecture, multilingual routing, invite-only auth with roles, Postgres, transactional email, private object storage, and a glass design system with light/dark themes.
 
-**Why this exists:** teams need a baseline that is not a toy demo — clear boundaries between **UI**, **data hooks**, **HTTP**, and **errors**, with two reference features (**Posts**, **Users**) you can copy instead of reverse-engineering the repo.
+Every service has a **free tier** and the whole stack runs locally with **zero setup** (embedded Postgres, console email, filesystem storage).
 
-Keywords: **next.js starter**, **multilingual next.js**, **app router boilerplate**, **tailwind css template**, **dark mode next.js**, **react query axios setup**.
-
----
-
-## What you get out of the box
-
-| Area         | What’s included                                                                                                                    |
-| ------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
-| **Routing**  | Locale-prefixed routes (`/en`, `/fa`), proxy redirect from `/`, RTL-ready layout                                                   |
-| **Data**     | Typed `http` client, global React Query defaults, error → toast wiring, optional **descriptor** (`api`) pattern for advanced cases |
-| **Features** | **Posts** + **Users** modules: `api/` · `hooks/` · `ui/` · `types/` · routes under `app/[locale]/`                                 |
-| **UX**       | Theme (light / dark / system), toasts, route progress, accessible loading/error/empty patterns in reference UIs                    |
-| **Quality**  | ESLint, Prettier, Husky, lint-staged, Commitlint, Commitizen                                                                       |
-
----
-
-## When to use this starter
-
-**Good fit:** multilingual or single-locale **dashboards**, **B2B SaaS** shells, **internal tools**, and products that will call a **REST/JSON API** from the browser with React Query.
-
-**Not a goal of the template:** a full backend, database, or auth provider in-repo — you wire your API and tokens (hooks are ready for refresh patterns; see docs).
-
----
-
-## Documentation (start here)
-
-| Read first                                                     | Purpose                                                                               |
-| -------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| **[`docs/getting-started.md`](./docs/getting-started.md)**     | Install, env, dev server, **how to add a feature in ~2 minutes**, copy-paste template |
-| **[`docs/feature-blueprint.md`](./docs/feature-blueprint.md)** | **Canonical** folder layout, layer rules, diagram, mistakes, FAQ                      |
-| **[`docs/architecture.md`](./docs/architecture.md)**           | App Router layers, proxy, request lifecycle                                           |
-| **[`docs/auth-system.md`](./docs/auth-system.md)**             | Hybrid auth, session facade, refresh, Edge gate, RBAC                                 |
-| **[`docs/README.md`](./docs/README.md)**                       | Full index + **[Developer learning path](./docs/README.md#developer-learning-path)** (guided ~30 min)              |
-
-**API mental model:** **`http.get` / `http.post`** = default simple path. **`api.*`** = optional request **descriptors** when you need `{ fetch, cancel, queryKey }` together — [`docs/api-layer.md`](./docs/api-layer.md).
-
-**Data flow (browser):** **UI** → **hooks** (`useQuery` / `useMutation`) → **React Query** → **`queryFn`** (from shared **`queryOptions`**) → **`http`** (or advanced **`api`**) → **Axios** → your **API**.
-
----
-
-## Consistent feature pattern
-
-Every feature module in `src/features/*` follows the **same shape** (`api` / `hooks` / `ui` / `types`) so onboarding and code review stay cheap at scale. **Posts** and **Users** are intentional **twins** — learn one, you know the other. Details: [`docs/feature-blueprint.md`](./docs/feature-blueprint.md).
-
----
+| Concern   | Choice                                                                           | Free tier              |
+| --------- | -------------------------------------------------------------------------------- | ---------------------- |
+| Framework | Next.js 16 (App Router, Server Actions), React 19, TypeScript 6                  | —                      |
+| Styling   | Tailwind CSS 4, layered design tokens                                            | —                      |
+| i18n      | next-intl, default locale **without** prefix (`/`), others prefixed (`/fa`), RTL | —                      |
+| Auth      | Better Auth + admin plugin (roles, bans, rate limits), invite-only               | self-hosted            |
+| Database  | Drizzle ORM · PGlite locally · any Postgres in prod                              | Neon: 0.5 GB           |
+| Email     | Resend + React Email                                                             | 3,000 emails/month     |
+| Storage   | S3-compatible presigned URLs (Cloudflare R2) · local driver in dev               | R2: 10 GB, free egress |
+| Quality   | ESLint, Prettier, Vitest, Husky, lint-staged, Commitlint, GitHub Actions         | —                      |
 
 ## Quick start
 
 ```bash
 npm install
-cp .env.example .env.local
+cp .env.example .env.local          # works as-is for local dev
+npm run admin:create -- you@example.com "Your Name"   # prints a set-password link
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). Set `NEXT_PUBLIC_API_BASE_URL` in `.env.local` (see `.env.example`).
+Open the printed link, choose a password, and you're in the admin panel. Migrations run automatically in local (PGlite) mode.
 
----
+> PGlite is single-process: stop `npm run dev` before running `admin:create` or `db:migrate` locally.
 
-## Reference features (copy these)
+## Scripts
 
-| Module    | Path                  | Demonstrates                                                                  |
-| --------- | --------------------- | ----------------------------------------------------------------------------- |
-| **Posts** | `src/features/posts/` | List + detail, `postsQueryPrefix`, `queryOptions`, skeleton / error / empty   |
-| **Users** | `src/features/users/` | Same architecture, different domain — proves the pattern is not post-specific |
+| Script                             | Does                                                   |
+| ---------------------------------- | ------------------------------------------------------ |
+| `dev` / `build` / `start`          | Next.js                                                |
+| `check`                            | lint + typecheck + tests (also in CI)                  |
+| `db:generate`                      | create a migration from schema changes                 |
+| `db:migrate`                       | apply migrations to `DATABASE_URL` (run on deploy)     |
+| `db:studio`                        | Drizzle Studio                                         |
+| `admin:create -- <email> "<name>"` | create or promote an admin and print their invite link |
 
-Example routes: `/{locale}`, `/{locale}/users`, `/{locale}/users/[id]`, `/{locale}/posts/[id]`.
-
----
-
-## Project structure (overview)
+## Structure
 
 ```txt
 src/
-  app/
-    [locale]/                 # localized layout + pages
-      page.tsx                # home (includes posts/users previews)
-      users/                  # users index + dynamic detail
-      posts/                  # post detail
-    layout.tsx
-    page.tsx                  # → default locale
-  components/
-    home/                     # page-level blocks wired into locale home
-    providers/                # Query, theme, toast, app context
-    ui/                       # shared controls (theme, language, progress)
-  features/                   # ← feature modules (canonical pattern)
-    posts/
-      api/                    # get-posts, get-post-by-id, posts.service (optional descriptor)
-      hooks/                  # usePosts, usePost
-      ui/                     # PostsList, PostCard, PostDetail
-      types/
-      index.ts
-    users/
-      api/
-      hooks/
-      ui/
-      types/
-      index.ts
-  config/                     # site, locales
-  i18n/                       # dictionaries, getDictionary
-  lib/
-    api/                      # axios client, http, optional api descriptors, errors, query key prefixes
-    react-query/              # QueryClient defaults, global error registration
-    http/api-client.ts        # legacy re-export
-  store/                      # example zustand
+  app/                    routes only — thin, compose features
+    [locale]/(site)       public pages + account
+    [locale]/(auth)       login, forgot/reset password, accept invite
+    [locale]/admin        admin panel (requireAdmin in layout)
+    api/                  auth handler, local storage endpoint
+  features/<name>/        a vertical slice (see docs/architecture.md)
+    index.ts              public UI + client API
+    server.ts             public server API (services, queries)
+    components/ actions/ services/ db/ emails/ schemas.ts
+  components/ui           design-system primitives
+  components/layout       header, footer, theme + locale switchers, aurora
+  config/                 site identity, route policy
+  i18n/                   routing, navigation, messages/{en,fa}.json
+  lib/                    env, db, email, storage, seo, action helpers
+  styles/globals.css      design tokens
 ```
 
-Deep dives: [`docs/architecture.md`](./docs/architecture.md), [`docs/feature-blueprint.md`](./docs/feature-blueprint.md).
+## Docs
 
----
+- [Architecture](docs/architecture.md): feature slices, layers, rules, adding a feature
+- [Auth & roles](docs/auth.md): invite flow, guards, permissions
+- [Design system](docs/design-system.md): tokens, glass, re-branding
+- [Storage](docs/storage.md): presigned uploads/downloads, R2 setup
+- [Deployment](docs/deployment.md): Neon, R2, Resend, env, migrations
 
-## Core stack
-
-- **Next.js 16**, **React 19**, **TypeScript**, **App Router**
-- **Tailwind CSS v4** + CSS variable design tokens
-- **next-themes**, **nprogress**, **zustand**
-- **axios** + **@tanstack/react-query** (+ Devtools)
-- **ESLint**, **Prettier**, **Husky**, **lint-staged**, **Commitlint**, **Commitizen**
-
----
-
-## Available scripts
+## Starting a new project from this
 
 ```bash
-npm run dev          # start development server
-npm run build        # production build
-npm run start        # run built app
-npm run lint         # lint codebase
-npm run lint:fix     # fix lint issues
-npm run typecheck    # run TypeScript checks
-npm run format       # format all files
-npm run format:check # verify formatting
-npm run commit       # interactive conventional commit
+gh repo create my-app --private --template ilkhanihosein/NextForge
+# or: npx degit ilkhanihosein/NextForge my-app
 ```
 
----
-
-## Environment variables
-
-Use `.env.local`:
-
-```bash
-NEXT_PUBLIC_API_BASE_URL=https://jsonplaceholder.typicode.com
-```
-
-More: [`docs/env-configuration.md`](./docs/env-configuration.md).
-
----
-
-## Theming & i18n
-
-- **Theme tokens:** `src/app/globals.css` (`--background`, `--primary`, `--brand`, …).
-- **Locales:** `src/config/site.ts`; dictionaries under `src/i18n/dictionaries/`. See [`docs/internationalization.md`](./docs/internationalization.md).
-
----
-
-## Git workflow
-
-- **pre-commit:** `lint-staged`
-- **commit-msg:** Commitlint (Conventional Commits)
-- **`npm run commit`:** Commitizen
-
-New repo: `git init` then `npm run prepare`.
-
-Details: [`docs/git-hooks-and-commit-conventions.md`](./docs/git-hooks-and-commit-conventions.md).
-
----
-
-## SEO notes
-
-Structure supports semantic pages, locale-aware metadata, and SSG for locale roots. Next steps for production: `sitemap`, `robots`, Open Graph templates.
+Then edit `src/config/site.ts`, the palette in `src/styles/globals.css`, and the messages in `src/i18n/messages/`.

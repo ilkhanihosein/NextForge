@@ -1,5 +1,6 @@
 .next
 node_modules
-out
-build
+drizzle
 package-lock.json
+.data
+storage
