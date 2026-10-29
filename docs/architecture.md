@@ -21,7 +21,7 @@ features/resources/
 1. Outside a feature, import only `@/features/<name>` or `@/features/<name>/server`. Internals are private (`no-restricted-imports`).
 2. Features may depend on other features' public entries and on `lib/`, `components/`, `config/`, `i18n/`. `lib/` never imports features (except the schema aggregator).
 3. Routes in `app/` are thin: read params, call a guard, call a service, render feature components.
-4. Every mutation is a Server Action or route handler that **validates with Zod** and **authorizes on the server**; the proxy is never the only gate.
+4. Every mutation is a Server Action or route handler that **validates with Zod** and **authorizes on the server**; the proxy is never the only gate. Admin actions that change accounts or delete things also call `recordAudit` ([auth](auth.md#activity-log--alerts)), and anything destructive asks first with `useConfirm` in the UI.
 
 ## Data flow
 
@@ -37,6 +37,6 @@ Public pages are statically generated per locale (`generateStaticParams` + `setR
 
 1. `mkdir src/features/<name>` with the layout above.
 2. Tables in `db/schema.ts`, then export them from `src/lib/db/schema.ts` and run `npm run db:generate`.
-3. Messages under a `<name>` namespace in every `src/i18n/messages/*.json`.
-4. Routes in `src/app/[locale]/…`; admin screens register in `src/features/admin/nav.ts`.
+3. Messages under a `<name>` namespace in every `src/i18n/messages/*.json` (all five languages, see [i18n](i18n.md)).
+4. Routes in `src/app/[locale]/…`; admin screens register in `src/features/admin/nav.ts` (`ownerOnly: true` for owner screens, plus `requireOwner()` in the page).
 5. Private routes go in `src/config/routes.ts` (`protectedRoutes` / `privateRoutes`).
