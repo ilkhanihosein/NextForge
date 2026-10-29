@@ -16,6 +16,17 @@ export const auth = betterAuth({
   appName: siteConfig.name,
   baseURL: env.NEXT_PUBLIC_APP_URL,
   secret: env.BETTER_AUTH_SECRET,
+  // Production trusts only NEXT_PUBLIC_APP_URL. In development any localhost port is
+  // accepted, so `npm run dev -- --port 3001` works without editing .env.local.
+  trustedOrigins:
+    env.NODE_ENV === "development"
+      ? (request) => {
+          const origin = request?.headers.get("origin");
+          return origin && /^http:\/\/(localhost|127\.0\.0\.1):\d+$/.test(origin)
+            ? [origin]
+            : [];
+        }
+      : undefined,
   database: drizzleAdapter(db, {
     provider: "pg",
     schema: {
