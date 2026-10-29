@@ -88,22 +88,26 @@ export function InviteUserDialog() {
           </Field>
           <div className="grid gap-5 sm:grid-cols-2">
             <Field label={t("fields.role")} htmlFor="invite-role">
-              <Select id="invite-role" name="role" defaultValue={DEFAULT_ROLE}>
-                {ROLES.map((role) => (
-                  <option key={role} value={role}>
-                    {t(`roles.${role}` as "roles.admin")}
-                  </option>
-                ))}
-              </Select>
+              <Select
+                id="invite-role"
+                name="role"
+                defaultValue={DEFAULT_ROLE}
+                options={ROLES.map((role) => ({
+                  value: role,
+                  label: t(`roles.${role}` as "roles.admin"),
+                }))}
+              />
             </Field>
             <Field label={t("fields.emailLanguage")} htmlFor="invite-locale">
-              <Select id="invite-locale" name="locale" defaultValue={locale}>
-                {routing.locales.map((l) => (
-                  <option key={l} value={l}>
-                    {tc(`languages.${l}`)}
-                  </option>
-                ))}
-              </Select>
+              <Select
+                id="invite-locale"
+                name="locale"
+                defaultValue={locale}
+                options={routing.locales.map((l) => ({
+                  value: l,
+                  label: tc(`languages.${l}`),
+                }))}
+              />
             </Field>
           </div>
           <div className="mt-2 flex justify-end gap-2">

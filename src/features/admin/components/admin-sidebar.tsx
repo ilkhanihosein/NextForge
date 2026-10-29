@@ -10,9 +10,14 @@ export function AdminSidebar({ userName }: { userName: string }) {
   const t = useTranslations("admin.nav");
   const pathname = usePathname();
 
+  // From lg up: as tall as the screen below the header and pinned there, so sign-out stays
+  // in reach on long pages (self-start: a grid item would otherwise stretch and never stick).
   return (
-    <aside className="relative flex flex-col gap-1 rounded-xl p-1.5 glass max-lg:[scrollbar-width:none] max-lg:flex-row max-lg:overflow-x-auto lg:sticky lg:top-28 lg:min-h-[calc(100dvh-10rem)] lg:p-3 [&::-webkit-scrollbar]:hidden">
-      <nav aria-label={t("label")} className="flex gap-1 max-lg:min-w-full lg:flex-col">
+    <aside className="relative flex flex-col gap-1 rounded-xl p-1.5 glass max-lg:[scrollbar-width:none] max-lg:flex-row max-lg:overflow-x-auto lg:sticky lg:top-26 lg:h-[calc(100dvh-8rem)] lg:self-start lg:p-3 [&::-webkit-scrollbar]:hidden">
+      <nav
+        aria-label={t("label")}
+        className="flex gap-1 max-lg:min-w-full lg:min-h-0 lg:flex-col lg:overflow-y-auto"
+      >
         {adminNav.map(({ href, label, icon: Icon, exact }) => {
           const active = exact
             ? pathname === href

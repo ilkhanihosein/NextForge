@@ -1,5 +1,6 @@
 "use client";
 
+import { DirectionProvider } from "@base-ui/react/direction-provider";
 import { ThemeProvider } from "next-themes";
 import type { ReactNode } from "react";
 import { Toaster } from "sonner";
@@ -18,7 +19,7 @@ export function Providers({
       enableSystem
       disableTransitionOnChange
     >
-      {children}
+      <DirectionProvider direction={dir}>{children}</DirectionProvider>
       <Toaster
         position={dir === "rtl" ? "bottom-left" : "bottom-right"}
         dir={dir}

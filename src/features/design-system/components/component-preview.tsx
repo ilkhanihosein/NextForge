@@ -61,10 +61,15 @@ export function ComponentPreview({ theme }: { theme: "light" | "dark" }) {
               <Input id={`${theme}-email`} placeholder="you@example.com" />
             </Field>
             <Field label="Level" htmlFor={`${theme}-level`}>
-              <Select id={`${theme}-level`} defaultValue="b2">
-                <option value="b1">B1 · Intermediate</option>
-                <option value="b2">B2 · Upper-intermediate</option>
-              </Select>
+              <Select
+                id={`${theme}-level`}
+                defaultValue="b2"
+                options={[
+                  { value: "b1", label: "B1", description: "Intermediate" },
+                  { value: "b2", label: "B2", description: "Upper-intermediate" },
+                  { value: "c1", label: "C1", description: "Advanced" },
+                ]}
+              />
             </Field>
             <Field
               label="Invalid"

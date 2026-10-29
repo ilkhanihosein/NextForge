@@ -5,6 +5,7 @@ export { Dialog } from "./dialog";
 export { EmptyState } from "./empty-state";
 export { Field, fieldAria } from "./field";
 export { FormMessage } from "./form-message";
-export { Input, Select, Textarea, fieldBase } from "./input";
+export { Input, Textarea, fieldBase } from "./input";
 export { PageHeader } from "./page-header";
+export { Select, type SelectOption } from "./select";
 export { Skeleton } from "./skeleton";

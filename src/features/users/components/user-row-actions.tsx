@@ -41,15 +41,14 @@ export function UserRowActions({
         aria-label={t("fields.role")}
         defaultValue={user.role}
         disabled={pending}
-        onChange={(e) => run(() => setRoleAction(user.id, e.target.value))}
-        className="w-32 [&_select]:h-9"
-      >
-        {ROLES.map((role) => (
-          <option key={role} value={role}>
-            {t(`roles.${role}` as "roles.admin")}
-          </option>
-        ))}
-      </Select>
+        onValueChange={(role) => run(() => setRoleAction(user.id, role))}
+        size="sm"
+        className="w-32"
+        options={ROLES.map((role) => ({
+          value: role,
+          label: t(`roles.${role}` as "roles.admin"),
+        }))}
+      />
       {user.status === "invited" ? (
         <Button
           size="icon-sm"
