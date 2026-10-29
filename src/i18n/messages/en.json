@@ -11,8 +11,19 @@
     "cancel": "Cancel",
     "save": "Save",
     "switchLanguage": "Change language",
-    "languages": { "en": "English", "fa": "فارسی" },
-    "theme": { "label": "Theme", "light": "Light", "dark": "Dark", "system": "System" }
+    "languages": {
+      "en": "English",
+      "fa": "فارسی"
+    },
+    "theme": {
+      "label": "Theme",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
+    "menu": "Menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
   },
   "notFound": {
     "title": "Page not found",
@@ -115,12 +126,20 @@
     "passwordDescription": "Changing it signs you out on every other device."
   },
   "admin": {
-    "nav": { "label": "Admin", "dashboard": "Overview", "users": "Users" },
+    "nav": {
+      "label": "Admin",
+      "dashboard": "Overview",
+      "users": "Users"
+    },
     "dashboard": {
       "eyebrow": "Admin",
       "title": "Good to see you, {name}",
       "description": "A quick look at what’s happening.",
-      "stats": { "users": "Total users", "members": "Members", "admins": "Admins" }
+      "stats": {
+        "users": "Total users",
+        "members": "Members",
+        "admins": "Admins"
+      }
     },
     "users": {
       "eyebrow": "People",
@@ -146,8 +165,15 @@
         "joined": "Added",
         "actions": "Actions"
       },
-      "roles": { "admin": "Admin", "member": "Member" },
-      "status": { "active": "Active", "invited": "Invited", "suspended": "Suspended" },
+      "roles": {
+        "admin": "Admin",
+        "member": "Member"
+      },
+      "status": {
+        "active": "Active",
+        "invited": "Invited",
+        "suspended": "Suspended"
+      },
       "empty": {
         "title": "No users found",
         "description": "Invite someone to get started."

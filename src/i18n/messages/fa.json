@@ -11,8 +11,19 @@
     "cancel": "انصراف",
     "save": "ذخیره",
     "switchLanguage": "تغییر زبان",
-    "languages": { "en": "English", "fa": "فارسی" },
-    "theme": { "label": "پوسته", "light": "روشن", "dark": "تیره", "system": "سیستم" }
+    "languages": {
+      "en": "English",
+      "fa": "فارسی"
+    },
+    "theme": {
+      "label": "پوسته",
+      "light": "روشن",
+      "dark": "تیره",
+      "system": "سیستم"
+    },
+    "menu": "منو",
+    "openMenu": "باز کردن منو",
+    "closeMenu": "بستن منو"
   },
   "notFound": {
     "title": "صفحه پیدا نشد",
@@ -115,12 +126,20 @@
     "passwordDescription": "با تغییر رمز، از تمام دستگاه‌های دیگر خارج می‌شوید."
   },
   "admin": {
-    "nav": { "label": "مدیریت", "dashboard": "نمای کلی", "users": "کاربران" },
+    "nav": {
+      "label": "مدیریت",
+      "dashboard": "نمای کلی",
+      "users": "کاربران"
+    },
     "dashboard": {
       "eyebrow": "مدیریت",
       "title": "خوش آمدید، {name}",
       "description": "نگاهی سریع به وضعیت سایت.",
-      "stats": { "users": "کل کاربران", "members": "اعضا", "admins": "مدیران" }
+      "stats": {
+        "users": "کل کاربران",
+        "members": "اعضا",
+        "admins": "مدیران"
+      }
     },
     "users": {
       "eyebrow": "افراد",
@@ -146,8 +165,15 @@
         "joined": "تاریخ افزودن",
         "actions": "عملیات"
       },
-      "roles": { "admin": "مدیر", "member": "عضو" },
-      "status": { "active": "فعال", "invited": "دعوت‌شده", "suspended": "تعلیق‌شده" },
+      "roles": {
+        "admin": "مدیر",
+        "member": "عضو"
+      },
+      "status": {
+        "active": "فعال",
+        "invited": "دعوت‌شده",
+        "suspended": "تعلیق‌شده"
+      },
       "empty": {
         "title": "کاربری پیدا نشد",
         "description": "برای شروع یک نفر را دعوت کنید."

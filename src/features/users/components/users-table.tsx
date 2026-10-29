@@ -30,8 +30,10 @@ export async function UsersTable({
     );
   }
 
+  // relative: absolutely positioned bits inside (e.g. sr-only labels) must scroll with
+  // the table instead of escaping it and widening the page on phones.
   return (
-    <div className="overflow-x-auto rounded-xl glass">
+    <div className="relative overflow-x-auto rounded-xl glass">
       <table className="w-full min-w-[720px] text-sm">
         <thead>
           <tr className="border-b text-start text-xs tracking-wider text-muted-foreground uppercase">

@@ -7,8 +7,9 @@ import { Suspense } from "react";
 import { buttonVariants } from "@/components/ui";
 import { Link, usePathname } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
+import { cn } from "@/lib/utils";
 
-function Switcher() {
+function Switcher({ className }: { className?: string }) {
   const t = useTranslations("common");
   const locale = useLocale();
   const pathname = usePathname();
@@ -20,7 +21,7 @@ function Switcher() {
       href={search ? `${pathname}?${search}` : pathname}
       locale={next}
       hrefLang={next}
-      className={buttonVariants({ variant: "glass", size: "sm" })}
+      className={buttonVariants({ variant: "glass", size: "sm", className })}
       aria-label={t("switchLanguage")}
     >
       <Languages aria-hidden />
@@ -30,10 +31,12 @@ function Switcher() {
 }
 
 /** Cycles to the next locale, keeping the current path and query. */
-export function LocaleSwitcher() {
+export function LocaleSwitcher({ className }: { className?: string }) {
   return (
-    <Suspense fallback={<span className="h-9 w-20 rounded-full bg-muted" />}>
-      <Switcher />
+    <Suspense
+      fallback={<span className={cn("h-9 w-20 rounded-full bg-muted", className)} />}
+    >
+      <Switcher className={className} />
     </Suspense>
   );
 }

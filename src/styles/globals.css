@@ -244,6 +244,13 @@
   * {
     border-color: var(--border);
   }
+  /* Safety net: decorative glows past the edge must never let phones pan sideways or
+     zoom the page out. Set on both: body's own value would otherwise be handed to the
+     viewport instead of clipping. `clip`, unlike `hidden`, keeps position: sticky working. */
+  html,
+  body {
+    overflow-x: clip;
+  }
   html {
     -webkit-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;

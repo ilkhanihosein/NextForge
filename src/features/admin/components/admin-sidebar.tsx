@@ -11,8 +11,8 @@ export function AdminSidebar({ userName }: { userName: string }) {
   const pathname = usePathname();
 
   return (
-    <aside className="sticky top-4 flex flex-col gap-1 rounded-xl p-3 glass max-lg:flex-row max-lg:overflow-x-auto lg:min-h-[calc(100dvh-8rem)]">
-      <nav aria-label={t("label")} className="flex gap-1 lg:flex-col">
+    <aside className="relative flex flex-col gap-1 rounded-xl p-1.5 glass max-lg:[scrollbar-width:none] max-lg:flex-row max-lg:overflow-x-auto lg:sticky lg:top-28 lg:min-h-[calc(100dvh-10rem)] lg:p-3 [&::-webkit-scrollbar]:hidden">
+      <nav aria-label={t("label")} className="flex gap-1 max-lg:min-w-full lg:flex-col">
         {adminNav.map(({ href, label, icon: Icon, exact }) => {
           const active = exact
             ? pathname === href
@@ -23,7 +23,7 @@ export function AdminSidebar({ userName }: { userName: string }) {
               href={href}
               aria-current={active ? "page" : undefined}
               className={cn(
-                "flex items-center gap-3 rounded-md px-3.5 py-2.5 text-sm whitespace-nowrap text-muted-foreground transition",
+                "flex items-center gap-2.5 rounded-md px-3.5 py-2.5 text-sm whitespace-nowrap text-muted-foreground transition max-lg:flex-1 max-lg:justify-center max-lg:px-3",
                 "hover:bg-glass-strong hover:text-foreground",
                 active && "bg-glass-strong text-foreground shadow-glass",
               )}
