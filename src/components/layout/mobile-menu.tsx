@@ -8,7 +8,7 @@ import { buttonVariants } from "@/components/ui";
 import { siteConfig } from "@/config/site";
 import { UserMenuList } from "@/features/auth";
 import { cn } from "@/lib/utils";
-import { LocaleSwitcher } from "./locale-switcher";
+import { LocaleList } from "./locale-switcher";
 import { ThemeToggle } from "./theme-toggle";
 
 type Props = {
@@ -81,9 +81,14 @@ export function MobileMenu({ nav, cta, className }: Props) {
             <UserMenuList onNavigate={close} />
           </div>
 
-          <div className="flex flex-wrap items-center justify-between gap-3 px-3 py-3">
+          <div className="border-b px-1 py-3">
+            <p className="mb-2 px-2 text-xs text-muted-foreground">{t("language")}</p>
+            <LocaleList onNavigate={close} />
+          </div>
+
+          <div className="flex items-center justify-between gap-3 px-3 py-3">
+            <span className="text-sm text-muted-foreground">{t("theme.label")}</span>
             <ThemeToggle />
-            <LocaleSwitcher />
           </div>
 
           {cta ? (

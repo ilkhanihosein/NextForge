@@ -4,6 +4,7 @@ import { UserMenu } from "@/features/auth";
 import { siteConfig } from "@/config/site";
 import { Link } from "@/i18n/navigation";
 import { Container } from "./container";
+import { HeaderBar } from "./header-bar";
 import { LocaleSwitcher } from "./locale-switcher";
 import { MobileMenu, NavLink } from "./mobile-menu";
 import { ThemeToggle } from "./theme-toggle";
@@ -27,7 +28,7 @@ export function SiteHeader({ nav = [], cta }: Props) {
         className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[140%] bg-linear-to-b from-background/85 via-background/50 to-transparent"
       />
       <Container>
-        <div className="flex h-14 items-center gap-2 rounded-full ps-5 pe-2 glass-strong sm:h-16 sm:gap-3 sm:ps-6 sm:pe-2.5">
+        <HeaderBar className="flex h-14 items-center gap-2 rounded-full ps-5 pe-2 glass-strong sm:h-16 sm:gap-3 sm:ps-6 sm:pe-2.5">
           <Link
             href="/"
             className="-my-1 py-2 font-display text-lg tracking-tight whitespace-nowrap sm:text-xl"
@@ -38,7 +39,7 @@ export function SiteHeader({ nav = [], cta }: Props) {
           {nav.length ? (
             <nav
               aria-label={t("mainNav")}
-              className="ms-4 hidden items-center gap-0.5 xl:flex"
+              className="ms-4 hidden items-center gap-0.5 group-data-collapsed/bar:hidden xl:flex"
             >
               {nav.map((item) => (
                 <NavLink
@@ -67,11 +68,16 @@ export function SiteHeader({ nav = [], cta }: Props) {
             <MobileMenu
               nav={nav}
               cta={cta}
-              // With section links the bar fits everything only from xl up.
-              className={nav.length ? "xl:hidden" : "lg:hidden"}
+              // With section links the bar fits everything only from xl up, and only
+              // when the labels are short enough (HeaderBar decides).
+              className={
+                nav.length
+                  ? "xl:hidden group-data-collapsed/bar:xl:inline-flex"
+                  : "lg:hidden"
+              }
             />
           </div>
-        </div>
+        </HeaderBar>
       </Container>
     </header>
   );

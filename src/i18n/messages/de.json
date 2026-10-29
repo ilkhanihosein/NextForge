@@ -1,0 +1,240 @@
+{
+  "metadata": {
+    "title": "NextForge — Full-Stack-Fundament für Next.js",
+    "description": "Feature-basierter Next.js-Starter mit Mehrsprachigkeit, Anmeldung nur auf Einladung, Postgres, E-Mail und Objektspeicher."
+  },
+  "common": {
+    "home": "Startseite",
+    "mainNav": "Hauptnavigation",
+    "rights": "Alle Rechte vorbehalten.",
+    "close": "Schließen",
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "switchLanguage": "Sprache wechseln",
+    "theme": {
+      "label": "Darstellung",
+      "light": "Hell",
+      "dark": "Dunkel",
+      "system": "Automatisch"
+    },
+    "menu": "Menü",
+    "openMenu": "Menü öffnen",
+    "closeMenu": "Menü schließen",
+    "language": "Sprache"
+  },
+  "notFound": {
+    "title": "Seite nicht gefunden",
+    "description": "Die gesuchte Seite wurde verschoben oder hat nie existiert.",
+    "back": "Zur Startseite"
+  },
+  "home": {
+    "eyebrow": "NextForge v2",
+    "title": "Jedes Produkt auf einem fertigen Fundament starten",
+    "description": "Feature-basierte Architektur, Anmeldung nur auf Einladung, Postgres, E-Mail und Speicher: verbunden, typisiert und von Anfang an sicher.",
+    "primaryCta": "Designsystem ansehen",
+    "secondaryCta": "Anmelden",
+    "features": {
+      "i18n": {
+        "title": "Von Haus aus mehrsprachig",
+        "body": "next-intl mit Standardsprache ohne Präfix, RTL-Unterstützung und hreflang-Alternativen."
+      },
+      "auth": {
+        "title": "Anmeldung nur auf Einladung",
+        "body": "Better Auth mit Rollen, Ratenbegrenzung, Passwort-Reset und Einladungen durch Admins."
+      },
+      "db": {
+        "title": "Postgres ohne Einrichtung",
+        "body": "Drizzle ORM auf eingebettetem PGlite lokal, jedes gehostete Postgres (Neon) in Produktion."
+      },
+      "email": {
+        "title": "Transaktionale E-Mails",
+        "body": "React-Email-Vorlagen, versendet über Resend und in der Entwicklung in der Konsole ausgegeben."
+      },
+      "storage": {
+        "title": "Privater Objektspeicher",
+        "body": "Uploads und Downloads über signierte URLs auf Cloudflare R2 oder jedem S3, mit lokalem Treiber für die Entwicklung."
+      },
+      "design": {
+        "title": "Glas-Designsystem",
+        "body": "Geschichtete Tokens, helle und dunkle Darstellung und barrierearme Basiskomponenten."
+      }
+    }
+  },
+  "designSystem": {
+    "eyebrow": "Grundlagen",
+    "title": "Designsystem",
+    "description": "Grundpalette, semantische Tokens und zentrale Komponenten. Die Werte werden live aus dem CSS gelesen, die Seite entspricht also immer dem Code.",
+    "palette": "Farbpalette",
+    "semantic": "Semantische Tokens",
+    "semanticHint": "Wechseln Sie oben die Darstellung: Diese Farben passen sich an, die Grundpalette darüber nicht.",
+    "typography": "Typografie",
+    "components": "Komponenten in beiden Darstellungen"
+  },
+  "auth": {
+    "email": "E-Mail",
+    "password": "Passwort",
+    "showPassword": "Passwort anzeigen",
+    "hidePassword": "Passwort verbergen",
+    "forgotPassword": "Passwort vergessen?",
+    "signIn": "Anmelden",
+    "signOut": "Abmelden",
+    "admin": "Verwaltung",
+    "account": "Konto",
+    "welcomeBack": "Willkommen zurück",
+    "signInTitle": "Anmelden",
+    "signInDescription": "Konten gibt es nur auf Einladung. Verwenden Sie die E-Mail-Adresse, an die Ihre Einladung ging.",
+    "forgotTitle": "Passwort zurücksetzen",
+    "forgotDescription": "Geben Sie Ihre E-Mail-Adresse ein. Wir schicken Ihnen einen sicheren Link, mit dem Sie ein neues Passwort wählen.",
+    "sendResetLink": "Link senden",
+    "resetSent": "Falls ein Konto mit dieser E-Mail-Adresse existiert, ist ein Link unterwegs. Er ist eine Stunde lang gültig.",
+    "resetTitle": "Neues Passwort wählen",
+    "resetDescription": "Wählen Sie etwas Langes, das Sie sich gut merken können. Auf allen anderen Geräten werden Sie abgemeldet.",
+    "resetDone": "Ihr Passwort wurde geändert. Sie können sich jetzt anmelden.",
+    "requestNewLink": "Neuen Link anfordern",
+    "backToLogin": "Zurück zur Anmeldung",
+    "newPassword": "Neues Passwort",
+    "confirmPassword": "Passwort bestätigen",
+    "currentPassword": "Aktuelles Passwort",
+    "passwordHint": "Mindestens {min} Zeichen.",
+    "savePassword": "Passwort speichern",
+    "passwordChanged": "Passwort geändert. Auf anderen Geräten wurden Sie abgemeldet.",
+    "inviteTitle": "Einladung",
+    "inviteEyebrow": "Sie sind eingeladen",
+    "inviteHello": "Willkommen, {name}",
+    "inviteDescription": "Wählen Sie ein Passwort für {email}, um Ihr Konto zu aktivieren.",
+    "activateAccount": "Konto aktivieren",
+    "errors": {
+      "invalidCredentials": "E-Mail-Adresse und Passwort passen nicht zusammen.",
+      "tooManyAttempts": "Zu viele Versuche. Bitte warten Sie eine Minute und versuchen Sie es erneut.",
+      "banned": "Dieses Konto wurde gesperrt. Bitte wenden Sie sich an die Verwaltung.",
+      "passwordTooShort": "Bitte mindestens {min} Zeichen verwenden.",
+      "passwordTooLong": "Dieses Passwort ist zu lang.",
+      "passwordMismatch": "Die Passwörter stimmen nicht überein.",
+      "resetInvalid": "Dieser Link ist ungültig oder abgelaufen.",
+      "inviteInvalid": "Dieser Einladungslink ist ungültig, abgelaufen oder wurde schon verwendet. Bitten Sie um eine neue Einladung.",
+      "currentPasswordWrong": "Ihr aktuelles Passwort ist nicht korrekt.",
+      "validation": "Bitte prüfen Sie die markierten Felder."
+    }
+  },
+  "account": {
+    "eyebrow": "Ihr Konto",
+    "title": "Konto",
+    "passwordTitle": "Passwort",
+    "passwordDescription": "Wenn Sie es ändern, werden Sie auf allen anderen Geräten abgemeldet."
+  },
+  "admin": {
+    "nav": {
+      "label": "Verwaltung",
+      "dashboard": "Übersicht",
+      "users": "Nutzer"
+    },
+    "dashboard": {
+      "eyebrow": "Verwaltung",
+      "title": "Schön, Sie zu sehen, {name}",
+      "description": "Ein kurzer Überblick über das Geschehen.",
+      "stats": {
+        "users": "Nutzer insgesamt",
+        "members": "Mitglieder",
+        "admins": "Admins"
+      }
+    },
+    "users": {
+      "eyebrow": "Personen",
+      "title": "Nutzer",
+      "description": "{count, plural, =0 {Noch keine Nutzer} one {# Nutzer} other {# Nutzer}}. Konten entstehen nur per Einladung.",
+      "searchPlaceholder": "Name oder E-Mail suchen",
+      "invite": "Nutzer einladen",
+      "inviteTitle": "Nutzer einladen",
+      "inviteDescription": "Die Person erhält eine E-Mail mit einem Link, um ihr Passwort festzulegen. Der Link ist 7 Tage gültig.",
+      "sendInvite": "Einladung senden",
+      "resendInvite": "Einladung erneut senden",
+      "suspend": "Sperren",
+      "reactivate": "Wieder freischalten",
+      "delete": "Löschen",
+      "you": "Sie",
+      "fields": {
+        "name": "Name",
+        "email": "E-Mail",
+        "role": "Rolle",
+        "emailLanguage": "Sprache der E-Mail",
+        "status": "Status",
+        "joined": "Hinzugefügt",
+        "actions": "Aktionen"
+      },
+      "roles": {
+        "admin": "Admin",
+        "member": "Mitglied"
+      },
+      "status": {
+        "active": "Aktiv",
+        "invited": "Eingeladen",
+        "suspended": "Gesperrt"
+      },
+      "empty": {
+        "title": "Keine Nutzer gefunden",
+        "description": "Laden Sie jemanden ein, um loszulegen."
+      },
+      "toast": {
+        "invited": "Einladung gesendet.",
+        "inviteResent": "Eine neue Einladung ist unterwegs.",
+        "roleUpdated": "Rolle geändert.",
+        "suspended": "Nutzer gesperrt und abgemeldet.",
+        "reactivated": "Nutzer wieder freigeschaltet.",
+        "deleted": "Nutzer gelöscht."
+      },
+      "errors": {
+        "generic": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut.",
+        "validation": "Bitte prüfen Sie die markierten Felder.",
+        "invalidField": "Bitte prüfen Sie dieses Feld.",
+        "emailTaken": "Es gibt bereits einen Nutzer mit dieser E-Mail-Adresse.",
+        "notFound": "Nutzer nicht gefunden.",
+        "cannotModifySelf": "Ihr eigenes Konto können Sie hier nicht ändern."
+      },
+      "confirm": {
+        "suspend": {
+          "title": "{name} sperren?",
+          "body": "Die Person wird sofort abgemeldet und kann sich erst wieder anmelden, wenn Sie sie freischalten.",
+          "action": "Sperren"
+        },
+        "reactivate": {
+          "title": "{name} wieder freischalten?",
+          "body": "Die Person kann sich wieder anmelden und die Bibliothek nutzen.",
+          "action": "Freischalten"
+        },
+        "delete": {
+          "title": "{name} löschen?",
+          "body": "Das Konto wird endgültig entfernt. Das lässt sich nicht rückgängig machen.",
+          "action": "Nutzer löschen"
+        },
+        "makeAdmin": {
+          "title": "{name} zum Admin machen?",
+          "body": "Admins können alle Nutzer und alle Materialien der Bibliothek verwalten.",
+          "action": "Zum Admin machen"
+        },
+        "removeAdmin": {
+          "title": "{name} zum Mitglied machen?",
+          "body": "Die Person verliert den Zugang zur Verwaltung.",
+          "action": "Rolle ändern"
+        }
+      }
+    }
+  },
+  "emails": {
+    "invitation": {
+      "preview": "Ihre Einladung zu {brand}",
+      "heading": "Hallo {name},",
+      "body": "Sie wurden zu {brand} eingeladen. Wählen Sie ein Passwort, um Ihr Konto zu aktivieren.",
+      "action": "Passwort festlegen",
+      "footer": "Dieser Link ist 7 Tage gültig und funktioniert nur einmal. Falls Sie diese E-Mail nicht erwartet haben, können Sie sie ignorieren.",
+      "subject": "Ihre Einladung zu {brand}"
+    },
+    "resetPassword": {
+      "preview": "Passwort zurücksetzen",
+      "heading": "Hallo {name},",
+      "body": "Wir haben eine Anfrage erhalten, Ihr Passwort zurückzusetzen. Über den Button unten wählen Sie ein neues.",
+      "action": "Passwort zurücksetzen",
+      "footer": "Dieser Link läuft in einer Stunde ab. Falls Sie ihn nicht angefordert haben, müssen Sie nichts tun.",
+      "subject": "Passwort zurücksetzen"
+    }
+  }
+}

@@ -14,6 +14,7 @@ import {
   fieldAria,
 } from "@/components/ui";
 import { DEFAULT_ROLE, ROLES } from "@/features/auth";
+import { siteConfig } from "@/config/site";
 import { routing } from "@/i18n/routing";
 import { inviteUserAction } from "../actions/user-actions";
 
@@ -105,7 +106,7 @@ export function InviteUserDialog() {
                 defaultValue={locale}
                 options={routing.locales.map((l) => ({
                   value: l,
-                  label: tc(`languages.${l}`),
+                  label: siteConfig.localeNames[l],
                 }))}
               />
             </Field>

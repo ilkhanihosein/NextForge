@@ -1,5 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Manrope, Vazirmatn } from "next/font/google";
+import {
+  Amiri,
+  Fraunces,
+  IBM_Plex_Sans_Arabic,
+  Manrope,
+  Playfair_Display,
+  Vazirmatn,
+} from "next/font/google";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -21,12 +28,53 @@ const fraunces = Fraunces({
   display: "swap",
   axes: ["SOFT", "opsz"],
 });
+// Script-specific faces below aren't preloaded: the browser fetches each one only when a
+// page actually contains that script (unicode-range), so English pages pay nothing.
 const vazirmatn = Vazirmatn({
   subsets: ["arabic"],
   variable: "--font-vazirmatn",
   display: "swap",
   preload: false,
 });
+const plexArabic = IBM_Plex_Sans_Arabic({
+  subsets: ["arabic"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-plex-arabic",
+  display: "swap",
+  preload: false,
+});
+const amiri = Amiri({
+  subsets: ["arabic"],
+  weight: ["400", "700"],
+  variable: "--font-amiri",
+  display: "swap",
+  preload: false,
+});
+// Fraunces has no Cyrillic: Russian headings get Playfair Display, body keeps Manrope.
+const manropeCyrillic = Manrope({
+  subsets: ["cyrillic"],
+  variable: "--font-manrope-cyrillic",
+  display: "swap",
+  preload: false,
+});
+const playfair = Playfair_Display({
+  subsets: ["cyrillic"],
+  variable: "--font-playfair",
+  display: "swap",
+  preload: false,
+});
+
+const fontVariables = [
+  manrope,
+  fraunces,
+  vazirmatn,
+  plexArabic,
+  amiri,
+  manropeCyrillic,
+  playfair,
+]
+  .map((font) => font.variable)
+  .join(" ");
 
 type Props = { children: ReactNode; params: Promise<{ locale: string }> };
 
@@ -62,12 +110,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   const dir = getDirection(locale);
 
   return (
-    <html
-      lang={locale}
-      dir={dir}
-      suppressHydrationWarning
-      className={`${manrope.variable} ${fraunces.variable} ${vazirmatn.variable}`}
-    >
+    <html lang={locale} dir={dir} suppressHydrationWarning className={fontVariables}>
       <body className="min-h-dvh antialiased" suppressHydrationWarning>
         <NextIntlClientProvider>
           <Providers dir={dir}>

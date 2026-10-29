@@ -2,9 +2,9 @@
 
 import { Ban, MailPlus, RotateCcw, Trash2 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { toast } from "sonner";
-import { Button, Select } from "@/components/ui";
+import { Button, Select, useConfirm } from "@/components/ui";
 import { ROLES } from "@/features/auth";
 import type { ActionResult } from "@/lib/action";
 import {
@@ -24,14 +24,58 @@ export function UserRowActions({
 }) {
   const t = useTranslations("admin.users");
   const locale = useLocale();
+  const confirm = useConfirm();
   const [pending, startTransition] = useTransition();
+  // Controlled, so a cancelled confirmation leaves the old role showing.
+  const [role, setRole] = useState(user.role);
+  const name = user.name;
 
-  const run = (fn: () => Promise<ActionResult>) =>
+  const run = (fn: () => Promise<ActionResult>, onError?: () => void) =>
     startTransition(async () => {
       const result = await fn();
       if (result.ok) toast.success(t(`toast.${result.message}` as "toast.invited"));
-      else toast.error(t(`errors.${result.error}` as "errors.generic"));
+      else {
+        onError?.();
+        toast.error(t(`errors.${result.error}` as "errors.generic"));
+      }
     });
+
+  const changeRole = async (next: string) => {
+    const key = next === "admin" ? "makeAdmin" : "removeAdmin";
+    const ok = await confirm({
+      title: t(`confirm.${key}.title`, { name }),
+      description: t(`confirm.${key}.body`),
+      confirmLabel: t(`confirm.${key}.action`),
+      tone: next === "admin" ? "danger" : "default",
+    });
+    if (!ok) return;
+    const previous = role;
+    setRole(next);
+    run(
+      () => setRoleAction(user.id, next),
+      () => setRole(previous),
+    );
+  };
+
+  const toggleSuspended = async () => {
+    const key = user.status === "suspended" ? "reactivate" : "suspend";
+    const ok = await confirm({
+      title: t(`confirm.${key}.title`, { name }),
+      description: t(`confirm.${key}.body`),
+      confirmLabel: t(`confirm.${key}.action`),
+      tone: key === "suspend" ? "danger" : "default",
+    });
+    if (ok) run(() => setSuspendedAction(user.id, key === "suspend"));
+  };
+
+  const remove = async () => {
+    const ok = await confirm({
+      title: t("confirm.delete.title", { name }),
+      description: t("confirm.delete.body"),
+      confirmLabel: t("confirm.delete.action"),
+    });
+    if (ok) run(() => deleteUserAction(user.id));
+  };
 
   if (isSelf) return <span className="text-xs text-muted-foreground">{t("you")}</span>;
 
@@ -39,9 +83,9 @@ export function UserRowActions({
     <div className="flex items-center justify-end gap-1.5">
       <Select
         aria-label={t("fields.role")}
-        defaultValue={user.role}
+        value={role}
         disabled={pending}
-        onValueChange={(role) => run(() => setRoleAction(user.id, role))}
+        onValueChange={changeRole}
         size="sm"
         className="w-32"
         options={ROLES.map((role) => ({
@@ -67,9 +111,7 @@ export function UserRowActions({
         disabled={pending}
         title={user.status === "suspended" ? t("reactivate") : t("suspend")}
         aria-label={user.status === "suspended" ? t("reactivate") : t("suspend")}
-        onClick={() =>
-          run(() => setSuspendedAction(user.id, user.status !== "suspended"))
-        }
+        onClick={toggleSuspended}
       >
         {user.status === "suspended" ? <RotateCcw /> : <Ban />}
       </Button>
@@ -80,10 +122,7 @@ export function UserRowActions({
         title={t("delete")}
         aria-label={t("delete")}
         className="text-danger"
-        onClick={() => {
-          if (window.confirm(t("confirmDelete", { name: user.name })))
-            run(() => deleteUserAction(user.id));
-        }}
+        onClick={remove}
       >
         <Trash2 />
       </Button>

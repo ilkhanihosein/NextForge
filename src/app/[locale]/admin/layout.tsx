@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 import { Container } from "@/components/layout/container";
 import { SiteHeader } from "@/components/layout/site-header";
@@ -5,7 +6,9 @@ import { AdminSidebar } from "@/features/admin";
 import { requireAdmin } from "@/features/auth/server";
 import { privatePage } from "@/lib/seo/metadata";
 
-export const metadata = privatePage("Admin");
+export async function generateMetadata() {
+  return privatePage((await getTranslations("admin.nav"))("label"));
+}
 
 export default async function AdminLayout({ children }: { children: ReactNode }) {
   const { user } = await requireAdmin();

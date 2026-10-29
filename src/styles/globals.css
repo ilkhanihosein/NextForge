@@ -234,10 +234,26 @@
   --shadow-glass: var(--glass-shadow);
 }
 
-/* Persian: one family for body and display so the script stays consistent. */
+/* Each script gets faces drawn for it; Latin fallbacks keep English words inside
+   (brand names, "IELTS") in the site's own type. */
+
+/* Persian: Vazirmatn for body and display, so the script stays consistent. */
 :lang(fa) {
   --font-body: var(--font-vazirmatn), var(--font-manrope), system-ui, sans-serif;
   --font-heading: var(--font-vazirmatn), var(--font-fraunces), serif;
+}
+
+/* Arabic: IBM Plex Sans Arabic for reading, Amiri (classic Naskh) for headings, the
+   same sans/serif pairing as Manrope/Fraunces. */
+:lang(ar) {
+  --font-body: var(--font-plex-arabic), var(--font-manrope), system-ui, sans-serif;
+  --font-heading: var(--font-amiri), var(--font-fraunces), serif;
+}
+
+/* Russian: Manrope covers Cyrillic; Playfair Display stands in for Fraunces. */
+:lang(ru) {
+  --font-body: var(--font-manrope-cyrillic), var(--font-manrope), system-ui, sans-serif;
+  --font-heading: var(--font-playfair), var(--font-fraunces), serif;
 }
 
 @layer base {

@@ -1,13 +1,12 @@
 import "server-only";
 import { createHash, randomBytes, randomUUID } from "node:crypto";
 import { and, eq, gt, isNull } from "drizzle-orm";
-import { siteConfig } from "@/config/site";
 import { localizedPath } from "@/i18n/paths";
 import { db } from "@/lib/db";
 import { sendEmail } from "@/lib/email";
 import { env } from "@/lib/env";
 import { invitation, user } from "../db/schema";
-import { InvitationEmail } from "../emails/auth-emails";
+import { InvitationEmail, emailSubject } from "../emails/auth-emails";
 import { auth } from "./auth";
 
 const INVITE_TTL_MS = 1000 * 60 * 60 * 24 * 7;
@@ -40,10 +39,7 @@ export async function sendInvitation(params: {
   const url = `${env.NEXT_PUBLIC_APP_URL}${localizedPath("/accept-invite", params.locale)}?token=${token}`;
   await sendEmail({
     to: params.email,
-    subject:
-      params.locale === "fa"
-        ? `دعوت به ${siteConfig.name}`
-        : `You're invited to ${siteConfig.name}`,
+    subject: await emailSubject(params.locale, "invitation"),
     react: await InvitationEmail({ locale: params.locale, name: params.name, url }),
   });
   return { url };

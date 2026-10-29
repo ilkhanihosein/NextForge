@@ -43,3 +43,14 @@ export async function ResetPasswordEmail({ locale, name, url }: Props) {
     </EmailLayout>
   );
 }
+
+/** Subject line in the recipient's language (kept with the other email strings). */
+export async function emailSubject(
+  locale: string,
+  email: "invitation" | "resetPassword",
+) {
+  const t = await getTranslations({ locale: locale as "en", namespace: "emails" });
+  return email === "invitation"
+    ? t("invitation.subject", { brand: siteConfig.name })
+    : t("resetPassword.subject");
+}

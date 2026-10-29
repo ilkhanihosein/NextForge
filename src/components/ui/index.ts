@@ -1,6 +1,7 @@
 export { Badge } from "./badge";
 export { Button, buttonVariants, type ButtonSize, type ButtonVariant } from "./button";
 export { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./card";
+export { ConfirmProvider, useConfirm } from "./confirm";
 export { Dialog } from "./dialog";
 export { EmptyState } from "./empty-state";
 export { Field, fieldAria } from "./field";

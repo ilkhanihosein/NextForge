@@ -9,7 +9,7 @@ import { db } from "@/lib/db";
 import { env } from "@/lib/env";
 import { sendEmail } from "@/lib/email";
 import * as schema from "../db/schema";
-import { ResetPasswordEmail } from "../emails/auth-emails";
+import { ResetPasswordEmail, emailSubject } from "../emails/auth-emails";
 import { ac, ADMIN_ROLES, DEFAULT_ROLE, roles } from "../roles";
 
 export const auth = betterAuth({
@@ -50,7 +50,7 @@ export const auth = betterAuth({
       const locale = localeFromPath(new URL(callback, env.NEXT_PUBLIC_APP_URL).pathname);
       await sendEmail({
         to: user.email,
-        subject: locale === "fa" ? "بازنشانی رمز عبور" : "Reset your password",
+        subject: await emailSubject(locale, "resetPassword"),
         react: await ResetPasswordEmail({ locale, name: user.name, url }),
       });
     },

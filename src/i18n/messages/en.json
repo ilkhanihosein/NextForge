@@ -11,10 +11,6 @@
     "cancel": "Cancel",
     "save": "Save",
     "switchLanguage": "Change language",
-    "languages": {
-      "en": "English",
-      "fa": "فارسی"
-    },
     "theme": {
       "label": "Theme",
       "light": "Light",
@@ -23,7 +19,8 @@
     },
     "menu": "Menu",
     "openMenu": "Open menu",
-    "closeMenu": "Close menu"
+    "closeMenu": "Close menu",
+    "language": "Language"
   },
   "notFound": {
     "title": "Page not found",
@@ -154,7 +151,6 @@
       "suspend": "Suspend",
       "reactivate": "Reactivate",
       "delete": "Delete",
-      "confirmDelete": "Delete {name}? This can’t be undone.",
       "you": "You",
       "fields": {
         "name": "Name",
@@ -193,6 +189,33 @@
         "emailTaken": "A user with this email already exists.",
         "notFound": "User not found.",
         "cannotModifySelf": "You can’t change your own account here."
+      },
+      "confirm": {
+        "suspend": {
+          "title": "Suspend {name}?",
+          "body": "They’ll be signed out right away and can’t sign in again until you reactivate them.",
+          "action": "Suspend"
+        },
+        "reactivate": {
+          "title": "Reactivate {name}?",
+          "body": "They’ll be able to sign in and use the library again.",
+          "action": "Reactivate"
+        },
+        "delete": {
+          "title": "Delete {name}?",
+          "body": "Their account is removed for good. This can’t be undone.",
+          "action": "Delete user"
+        },
+        "makeAdmin": {
+          "title": "Make {name} an admin?",
+          "body": "Admins can manage every user and every resource in the library.",
+          "action": "Make admin"
+        },
+        "removeAdmin": {
+          "title": "Make {name} a member?",
+          "body": "They’ll lose access to the admin panel.",
+          "action": "Change role"
+        }
       }
     }
   },
@@ -202,14 +225,16 @@
       "heading": "Hello {name},",
       "body": "You’ve been invited to {brand}. Choose a password to activate your account.",
       "action": "Set my password",
-      "footer": "This link is valid for 7 days and can be used once. If you weren’t expecting this, you can ignore this email."
+      "footer": "This link is valid for 7 days and can be used once. If you weren’t expecting this, you can ignore this email.",
+      "subject": "You’re invited to {brand}"
     },
     "resetPassword": {
       "preview": "Reset your password",
       "heading": "Hello {name},",
       "body": "We received a request to reset your password. Use the button below to choose a new one.",
       "action": "Reset password",
-      "footer": "This link expires in one hour. If you didn’t ask for it, no action is needed."
+      "footer": "This link expires in one hour. If you didn’t ask for it, no action is needed.",
+      "subject": "Reset your password"
     }
   }
 }
