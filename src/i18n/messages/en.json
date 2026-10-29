@@ -126,7 +126,8 @@
     "nav": {
       "label": "Admin",
       "dashboard": "Overview",
-      "users": "Users"
+      "users": "Users",
+      "activity": "Activity"
     },
     "dashboard": {
       "eyebrow": "Admin",
@@ -162,6 +163,7 @@
         "actions": "Actions"
       },
       "roles": {
+        "owner": "Owner",
         "admin": "Admin",
         "member": "Member"
       },
@@ -188,7 +190,11 @@
         "invalidField": "Please check this field.",
         "emailTaken": "A user with this email already exists.",
         "notFound": "User not found.",
-        "cannotModifySelf": "You can’t change your own account here."
+        "cannotModifySelf": "You can’t change your own account here.",
+        "onlyOwner": "Only the site owner can change admin rights or act on another admin.",
+        "ownerProtected": "The owner’s account can’t be changed from here.",
+        "wrongPassword": "That password isn’t right.",
+        "passwordRequired": "Enter your password to confirm."
       },
       "confirm": {
         "suspend": {
@@ -208,15 +214,37 @@
         },
         "makeAdmin": {
           "title": "Make {name} an admin?",
-          "body": "Admins can manage every user and every resource in the library.",
+          "body": "Admins can manage members and all content.",
           "action": "Make admin"
         },
         "removeAdmin": {
           "title": "Make {name} a member?",
           "body": "They’ll lose access to the admin panel.",
           "action": "Change role"
-        }
+        },
+        "passwordLabel": "Your password",
+        "passwordHint": "For changes to admin rights we ask for your password again."
       }
+    },
+    "activity": {
+      "eyebrow": "Security",
+      "title": "Activity",
+      "description": "Every change to accounts and admin rights, newest first. Only owners can see this page.",
+      "empty": {
+        "title": "Nothing yet",
+        "description": "Changes to users will show up here."
+      },
+      "roleChange": "{from} → {to}",
+      "asRole": "as {role}",
+      "actions": {
+        "userInvite": "invited",
+        "userRole": "changed the role of",
+        "userSuspend": "suspended",
+        "userReactivate": "reactivated",
+        "userDelete": "deleted",
+        "passwordCheckFailed": "entered a wrong password while confirming an admin change"
+      },
+      "commandLine": "Command line"
     }
   },
   "emails": {
@@ -235,6 +263,15 @@
       "action": "Reset password",
       "footer": "This link expires in one hour. If you didn’t ask for it, no action is needed.",
       "subject": "Reset your password"
+    },
+    "securityAlert": {
+      "subject": "Security notice from {brand}",
+      "preview": "A change to admin rights on your site",
+      "heading": "Hello {name},",
+      "body": "{actor} {what}{target}.",
+      "ip": "From IP address {ip}.",
+      "action": "Review activity",
+      "footer": "If this wasn’t you or someone you trust, change your password right away and remove any admin you don’t recognise."
     }
   }
 }

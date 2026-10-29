@@ -1,6 +1,7 @@
 import { Search } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { Input, PageHeader } from "@/components/ui";
+import { isOwnerRole } from "@/features/auth";
 import { requireAdmin } from "@/features/auth/server";
 import { InviteUserDialog, UsersTable } from "@/features/users";
 import { listUsers } from "@/features/users/server";
@@ -14,6 +15,7 @@ export default async function AdminUsersPage({
   const { q, page } = await searchParams;
   const t = await getTranslations("admin.users");
   const result = await listUsers({ query: q, page: Number(page) || 1 });
+  const isOwner = isOwnerRole(user.role);
 
   return (
     <>
@@ -21,7 +23,7 @@ export default async function AdminUsersPage({
         eyebrow={t("eyebrow")}
         title={t("title")}
         description={t("description", { count: result.total })}
-        actions={<InviteUserDialog />}
+        actions={<InviteUserDialog isOwner={isOwner} />}
       />
       <form role="search" className="relative mb-5 max-w-sm">
         <Search
@@ -36,7 +38,7 @@ export default async function AdminUsersPage({
           className="ps-11"
         />
       </form>
-      <UsersTable users={result.items} currentUserId={user.id} />
+      <UsersTable users={result.items} currentUserId={user.id} actorIsOwner={isOwner} />
     </>
   );
 }

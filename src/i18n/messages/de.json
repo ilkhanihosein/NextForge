@@ -126,7 +126,8 @@
     "nav": {
       "label": "Verwaltung",
       "dashboard": "Übersicht",
-      "users": "Nutzer"
+      "users": "Nutzer",
+      "activity": "Aktivität"
     },
     "dashboard": {
       "eyebrow": "Verwaltung",
@@ -162,6 +163,7 @@
         "actions": "Aktionen"
       },
       "roles": {
+        "owner": "Inhaber",
         "admin": "Admin",
         "member": "Mitglied"
       },
@@ -188,7 +190,11 @@
         "invalidField": "Bitte prüfen Sie dieses Feld.",
         "emailTaken": "Es gibt bereits einen Nutzer mit dieser E-Mail-Adresse.",
         "notFound": "Nutzer nicht gefunden.",
-        "cannotModifySelf": "Ihr eigenes Konto können Sie hier nicht ändern."
+        "cannotModifySelf": "Ihr eigenes Konto können Sie hier nicht ändern.",
+        "onlyOwner": "Nur der Inhaber der Website kann Admin-Rechte vergeben oder entziehen und andere Admins bearbeiten.",
+        "ownerProtected": "Das Konto des Inhabers lässt sich hier nicht ändern.",
+        "wrongPassword": "Das Passwort ist nicht korrekt.",
+        "passwordRequired": "Geben Sie zur Bestätigung Ihr Passwort ein."
       },
       "confirm": {
         "suspend": {
@@ -208,14 +214,36 @@
         },
         "makeAdmin": {
           "title": "{name} zum Admin machen?",
-          "body": "Admins können alle Nutzer und alle Materialien der Bibliothek verwalten.",
+          "body": "Admins können Mitglieder und alle Inhalte verwalten.",
           "action": "Zum Admin machen"
         },
         "removeAdmin": {
           "title": "{name} zum Mitglied machen?",
           "body": "Die Person verliert den Zugang zur Verwaltung.",
           "action": "Rolle ändern"
-        }
+        },
+        "passwordLabel": "Ihr Passwort",
+        "passwordHint": "Bei Änderungen an Admin-Rechten fragen wir erneut nach Ihrem Passwort."
+      }
+    },
+    "activity": {
+      "eyebrow": "Sicherheit",
+      "title": "Aktivität",
+      "description": "Jede Änderung an Konten und Admin-Rechten, die neueste zuerst. Nur Inhaber sehen diese Seite.",
+      "empty": {
+        "title": "Noch nichts",
+        "description": "Änderungen an Nutzern erscheinen hier."
+      },
+      "roleChange": "{from} → {to}",
+      "asRole": "als {role}",
+      "commandLine": "Kommandozeile",
+      "actions": {
+        "userInvite": "hat eingeladen:",
+        "userRole": "hat die Rolle geändert von",
+        "userSuspend": "hat gesperrt:",
+        "userReactivate": "hat freigeschaltet:",
+        "userDelete": "hat gelöscht:",
+        "passwordCheckFailed": "hat bei der Bestätigung einer Admin-Änderung ein falsches Passwort eingegeben"
       }
     }
   },
@@ -235,6 +263,15 @@
       "action": "Passwort zurücksetzen",
       "footer": "Dieser Link läuft in einer Stunde ab. Falls Sie ihn nicht angefordert haben, müssen Sie nichts tun.",
       "subject": "Passwort zurücksetzen"
+    },
+    "securityAlert": {
+      "subject": "Sicherheitshinweis von {brand}",
+      "preview": "Eine Änderung an den Admin-Rechten Ihrer Website",
+      "heading": "Hallo {name},",
+      "body": "{actor} {what}{target}.",
+      "ip": "Von der IP-Adresse {ip}.",
+      "action": "Aktivität prüfen",
+      "footer": "Wenn das nicht Sie oder jemand Ihres Vertrauens war, ändern Sie sofort Ihr Passwort und entfernen Sie jeden Admin, den Sie nicht kennen."
     }
   }
 }

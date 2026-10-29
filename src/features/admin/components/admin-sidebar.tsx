@@ -6,7 +6,13 @@ import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { adminNav } from "../nav";
 
-export function AdminSidebar({ userName }: { userName: string }) {
+export function AdminSidebar({
+  userName,
+  isOwner,
+}: {
+  userName: string;
+  isOwner: boolean;
+}) {
   const t = useTranslations("admin.nav");
   const pathname = usePathname();
 
@@ -18,26 +24,28 @@ export function AdminSidebar({ userName }: { userName: string }) {
         aria-label={t("label")}
         className="flex gap-1 max-lg:min-w-full lg:min-h-0 lg:flex-col lg:overflow-y-auto"
       >
-        {adminNav.map(({ href, label, icon: Icon, exact }) => {
-          const active = exact
-            ? pathname === href
-            : pathname === href || pathname.startsWith(`${href}/`);
-          return (
-            <Link
-              key={href}
-              href={href}
-              aria-current={active ? "page" : undefined}
-              className={cn(
-                "flex items-center gap-2.5 rounded-md px-3.5 py-2.5 text-sm whitespace-nowrap text-muted-foreground transition max-lg:flex-1 max-lg:justify-center max-lg:px-3",
-                "hover:bg-glass-strong hover:text-foreground",
-                active && "bg-glass-strong text-foreground shadow-glass",
-              )}
-            >
-              <Icon className={cn("size-4", active && "text-brand")} aria-hidden />
-              {t(label)}
-            </Link>
-          );
-        })}
+        {adminNav
+          .filter((item) => !item.ownerOnly || isOwner)
+          .map(({ href, label, icon: Icon, exact }) => {
+            const active = exact
+              ? pathname === href
+              : pathname === href || pathname.startsWith(`${href}/`);
+            return (
+              <Link
+                key={href}
+                href={href}
+                aria-current={active ? "page" : undefined}
+                className={cn(
+                  "flex items-center gap-2.5 rounded-md px-3.5 py-2.5 text-sm whitespace-nowrap text-muted-foreground transition max-lg:flex-1 max-lg:justify-center max-lg:px-3",
+                  "hover:bg-glass-strong hover:text-foreground",
+                  active && "bg-glass-strong text-foreground shadow-glass",
+                )}
+              >
+                <Icon className={cn("size-4", active && "text-brand")} aria-hidden />
+                {t(label)}
+              </Link>
+            );
+          })}
       </nav>
       <div className="mt-auto hidden items-center justify-between gap-2 border-t px-2 pt-3 lg:flex">
         <span className="truncate text-sm text-muted-foreground">{userName}</span>

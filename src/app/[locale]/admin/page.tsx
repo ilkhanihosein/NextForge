@@ -28,7 +28,7 @@ export default async function AdminDashboardPage() {
         <StatCard
           icon={ShieldCheck}
           label={t("stats.admins")}
-          value={counts.admin ?? 0}
+          value={(counts.admin ?? 0) + (counts.owner ?? 0)}
         />
       </div>
     </>

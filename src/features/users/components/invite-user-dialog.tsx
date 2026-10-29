@@ -13,16 +13,18 @@ import {
   Select,
   fieldAria,
 } from "@/components/ui";
-import { DEFAULT_ROLE, ROLES } from "@/features/auth";
+import { ASSIGNABLE_ROLES, DEFAULT_ROLE, isAdminRole } from "@/features/auth";
 import { siteConfig } from "@/config/site";
 import { routing } from "@/i18n/routing";
 import { inviteUserAction } from "../actions/user-actions";
 
-export function InviteUserDialog() {
+/** Admins invite members; only an owner can invite an admin, and confirms with a password. */
+export function InviteUserDialog({ isOwner }: { isOwner: boolean }) {
   const t = useTranslations("admin.users");
   const tc = useTranslations("common");
   const locale = useLocale();
   const [open, setOpen] = useState(false);
+  const [role, setRole] = useState<string>(DEFAULT_ROLE);
   const [state, action, pending] = useActionState(
     async (
       prev: Awaited<ReturnType<typeof inviteUserAction>> | null,
@@ -88,17 +90,22 @@ export function InviteUserDialog() {
             />
           </Field>
           <div className="grid gap-5 sm:grid-cols-2">
-            <Field label={t("fields.role")} htmlFor="invite-role">
-              <Select
-                id="invite-role"
-                name="role"
-                defaultValue={DEFAULT_ROLE}
-                options={ROLES.map((role) => ({
-                  value: role,
-                  label: t(`roles.${role}` as "roles.admin"),
-                }))}
-              />
-            </Field>
+            {isOwner ? (
+              <Field label={t("fields.role")} htmlFor="invite-role">
+                <Select
+                  id="invite-role"
+                  name="role"
+                  value={role}
+                  onValueChange={setRole}
+                  options={ASSIGNABLE_ROLES.map((r) => ({
+                    value: r,
+                    label: t(`roles.${r}` as "roles.admin"),
+                  }))}
+                />
+              </Field>
+            ) : (
+              <input type="hidden" name="role" value={DEFAULT_ROLE} />
+            )}
             <Field label={t("fields.emailLanguage")} htmlFor="invite-locale">
               <Select
                 id="invite-locale"
@@ -111,6 +118,21 @@ export function InviteUserDialog() {
               />
             </Field>
           </div>
+          {isOwner && isAdminRole(role) ? (
+            <Field
+              label={t("confirm.passwordLabel")}
+              htmlFor="invite-password"
+              hint={t("confirm.passwordHint")}
+            >
+              <Input
+                id="invite-password"
+                name="password"
+                type="password"
+                required
+                autoComplete="current-password"
+              />
+            </Field>
+          ) : null}
           <div className="mt-2 flex justify-end gap-2">
             <Button variant="ghost" onClick={() => setOpen(false)}>
               {tc("cancel")}

@@ -13,9 +13,11 @@ const statusTone = {
 export async function UsersTable({
   users,
   currentUserId,
+  actorIsOwner,
 }: {
   users: UserListItem[];
   currentUserId: string;
+  actorIsOwner: boolean;
 }) {
   const t = await getTranslations("admin.users");
   const format = await getFormatter();
@@ -68,7 +70,11 @@ export async function UsersTable({
                 {format.dateTime(user.createdAt, { dateStyle: "medium" })}
               </td>
               <td className="px-5 py-4">
-                <UserRowActions user={user} isSelf={user.id === currentUserId} />
+                <UserRowActions
+                  user={user}
+                  isSelf={user.id === currentUserId}
+                  actorIsOwner={actorIsOwner}
+                />
               </td>
             </tr>
           ))}

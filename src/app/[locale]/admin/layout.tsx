@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { Container } from "@/components/layout/container";
 import { SiteHeader } from "@/components/layout/site-header";
 import { AdminSidebar } from "@/features/admin";
+import { isOwnerRole } from "@/features/auth";
 import { requireAdmin } from "@/features/auth/server";
 import { privatePage } from "@/lib/seo/metadata";
 
@@ -16,7 +17,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
     <>
       <SiteHeader />
       <Container className="grid gap-6 pt-6 pb-16 lg:grid-cols-[15rem_1fr]">
-        <AdminSidebar userName={user.name} />
+        <AdminSidebar userName={user.name} isOwner={isOwnerRole(user.role)} />
         <div className="min-w-0 animate-fade">{children}</div>
       </Container>
     </>

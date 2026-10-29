@@ -58,8 +58,10 @@ export const auth = betterAuth({
   session: {
     expiresIn: 60 * 60 * 24 * 30,
     updateAge: 60 * 60 * 24,
-    // Signed session snapshot in a cookie: most requests skip the session DB lookup.
-    cookieCache: { enabled: true, maxAge: 60 * 5 },
+    // Signed session snapshot in a cookie: most requests skip the session DB lookup. Kept
+    // short so a suspended or signed-out-everywhere user loses the library within a
+    // minute; admin pages and actions never use it (see requireAdmin).
+    cookieCache: { enabled: true, maxAge: 60 },
   },
   rateLimit: {
     enabled: env.NODE_ENV === "production",
