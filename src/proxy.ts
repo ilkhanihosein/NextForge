@@ -1,54 +1,30 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import { siteConfig } from "@/config/site";
-import { AUTH_ACCESS_COOKIE, isDemoAccessToken } from "@/lib/auth/session-cookies";
+import { getSessionCookie } from "better-auth/cookies";
+import { NextResponse, type NextRequest } from "next/server";
+import createIntlMiddleware from "next-intl/middleware";
+import { matchesRoute, privateRoutes, protectedRoutes } from "@/config/routes";
+import { localeFromPath, localizedPath, stripLocale } from "@/i18n/paths";
+import { routing } from "@/i18n/routing";
 
-const PUBLIC_FILE = /\.(.*)$/;
+const intl = createIntlMiddleware(routing);
 
-const protectedRestPaths = ["/profile", "/dashboard"];
+export default function proxy(request: NextRequest) {
+  const { pathname, search } = request.nextUrl;
+  const path = stripLocale(pathname);
 
-export function proxy(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-
-  if (
-    pathname.startsWith("/_next") ||
-    pathname.startsWith("/api") ||
-    PUBLIC_FILE.test(pathname)
-  ) {
-    return NextResponse.next();
+  // Optimistic gate: cookie presence only, no DB call. Authorization happens server-side.
+  if (matchesRoute(path, protectedRoutes) && !getSessionCookie(request)) {
+    const url = new URL(localizedPath("/login", localeFromPath(pathname)), request.url);
+    url.searchParams.set("next", pathname + search);
+    return NextResponse.redirect(url);
   }
 
-  const matchedLocale = siteConfig.locales.find(
-    (locale) => pathname === `/${locale}` || pathname.startsWith(`/${locale}/`),
-  );
-
-  if (matchedLocale) {
-    const prefix = `/${matchedLocale}`;
-    const rest = pathname === prefix ? "/" : pathname.slice(prefix.length);
-
-    if (!rest.startsWith("/login")) {
-      const isProtected = protectedRestPaths.some(
-        (p) => rest === p || rest.startsWith(`${p}/`),
-      );
-      if (isProtected) {
-        const access = request.cookies.get(AUTH_ACCESS_COOKIE)?.value;
-        if (!isDemoAccessToken(access)) {
-          const loginUrl = request.nextUrl.clone();
-          loginUrl.pathname = `${prefix}/login`;
-          loginUrl.searchParams.set("from", pathname);
-          return NextResponse.redirect(loginUrl);
-        }
-      }
-    }
-
-    return NextResponse.next();
-  }
-
-  const url = request.nextUrl.clone();
-  url.pathname = `/${siteConfig.defaultLocale}${pathname}`;
-  return NextResponse.redirect(url);
+  const response = intl(request);
+  if (matchesRoute(path, privateRoutes))
+    response.headers.set("X-Robots-Tag", "noindex, nofollow");
+  return response;
 }
 
 export const config = {
-  matcher: ["/((?!_next|api|.*\\..*).*)"],
+  // Everything except API routes, Next internals and files with an extension.
+  matcher: "/((?!api|_next|_vercel|.*\\..*).*)",
 };
