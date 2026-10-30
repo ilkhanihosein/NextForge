@@ -2,6 +2,11 @@
 
 Why things are the way they are, newest first. Add an entry whenever a choice isn't obvious from the code.
 
+## 2026-10-30 · Release details
+
+- The `owner` role is shown as **"Super admin"** in every language; ids unchanged ([auth](auth.md)).
+- **No `NEXT_LOCALE` cookie**: with locale detection off it was set but never read ([i18n](i18n.md)).
+
 ## 2026-10-30 · Security model for admins
 
 - **Owner role**, created from the CLI only. Only owners change admin rights or act on admins; nobody acts on an owner. _Why:_ before this, one stolen admin session could create more admins, reset the real owner's password and lock them out, silently.

@@ -12,6 +12,7 @@ Built on [Better Auth](https://better-auth.com) with the admin plugin. Config: `
 
 - **Owners are made only from the command line** (`npm run admin:create`), never from the panel. Running it needs the code and the database credentials, i.e. the server itself. That is the deliberate "top" of the system: there is no hidden super-role inside the app (see [decisions](decisions.md)).
 - More than one owner is allowed (e.g. the client and the developer).
+- **In the panel the owner role is called "Super admin"** (مدیر ارشد, Super-Admin, المشرف العام, Суперадмин). A common setup is the developer as super admin and the client as admin: an "Owner" label next to someone else would read as "the site isn't yours". The role id in the code and the database stays `owner`. Handing over later: `npm run admin:create -- client@… "Name"` on the client's existing account makes them a super admin too, password untouched.
 - No role has the admin plugin's dangerous permissions: **impersonation, setting another user's password or email, raw user updates**. One stolen admin session must not become a takeover of every account.
 
 ## Onboarding (invite-only)

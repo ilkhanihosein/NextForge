@@ -163,7 +163,7 @@
         "actions": "Actions"
       },
       "roles": {
-        "owner": "Owner",
+        "owner": "Super admin",
         "admin": "Admin",
         "member": "Member"
       },
@@ -191,8 +191,8 @@
         "emailTaken": "A user with this email already exists.",
         "notFound": "User not found.",
         "cannotModifySelf": "You can’t change your own account here.",
-        "onlyOwner": "Only the site owner can change admin rights or act on another admin.",
-        "ownerProtected": "The owner’s account can’t be changed from here.",
+        "onlyOwner": "Only a super admin can change admin rights or act on another admin.",
+        "ownerProtected": "A super admin’s account can’t be changed from here.",
         "wrongPassword": "That password isn’t right.",
         "passwordRequired": "Enter your password to confirm."
       },
@@ -229,7 +229,7 @@
     "activity": {
       "eyebrow": "Security",
       "title": "Activity",
-      "description": "Every change to accounts and admin rights, newest first. Only owners can see this page.",
+      "description": "Every change to accounts and admin rights, newest first. Only super admins can see this page.",
       "empty": {
         "title": "Nothing yet",
         "description": "Changes to users will show up here."

@@ -163,7 +163,7 @@
         "actions": "Aktionen"
       },
       "roles": {
-        "owner": "Inhaber",
+        "owner": "Super-Admin",
         "admin": "Admin",
         "member": "Mitglied"
       },
@@ -191,8 +191,8 @@
         "emailTaken": "Es gibt bereits einen Nutzer mit dieser E-Mail-Adresse.",
         "notFound": "Nutzer nicht gefunden.",
         "cannotModifySelf": "Ihr eigenes Konto können Sie hier nicht ändern.",
-        "onlyOwner": "Nur der Inhaber der Website kann Admin-Rechte vergeben oder entziehen und andere Admins bearbeiten.",
-        "ownerProtected": "Das Konto des Inhabers lässt sich hier nicht ändern.",
+        "onlyOwner": "Nur Super-Admins können Admin-Rechte vergeben oder entziehen und andere Admins bearbeiten.",
+        "ownerProtected": "Das Konto eines Super-Admins lässt sich hier nicht ändern.",
         "wrongPassword": "Das Passwort ist nicht korrekt.",
         "passwordRequired": "Geben Sie zur Bestätigung Ihr Passwort ein."
       },
@@ -229,7 +229,7 @@
     "activity": {
       "eyebrow": "Sicherheit",
       "title": "Aktivität",
-      "description": "Jede Änderung an Konten und Admin-Rechten, die neueste zuerst. Nur Inhaber sehen diese Seite.",
+      "description": "Jede Änderung an Konten und Admin-Rechten, die neueste zuerst. Nur Super-Admins sehen diese Seite.",
       "empty": {
         "title": "Noch nichts",
         "description": "Änderungen an Nutzern erscheinen hier."
